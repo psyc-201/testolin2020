@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>testolin2020_experiment</title>
+    <script src="https://unpkg.com/jspsych@8.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+    <link href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <style>
+  body {
+    background-color: black;
+    color: white;
+  }
+  .fixation-cross {
+    font-size: 48px;
+    text-align: center;
+    line-height: 100vh;
+  }
+  .stim-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 150px; /* controls distance between left/right images */
+    height: 100vh;
+  }
+  .stim-img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+  }
+</style>
+  <body></body>
+   <script>
+
+    const MASK_PATH = 'paired_images/mask_bw.png';     // no leading slash
+    const PAIRS_JSON_PATH = 'pairs_metadata.json';      // no leading slash
+
+    const LEFT_KEY  = 'f';
+    const RIGHT_KEY = 'j';
+
+    const jsPsych = initJsPsych({
+      on_finish: function() {
+        jsPsych.data.displayData();
+      }
+    });
+
+    // ---- main: load metadata, then build timeline, then run ----
+    fetch(PAIRS_JSON_PATH)
+      .then(response => response.json())
+      .then(raw_rows => {
+        console.log("Loaded metadata rows:", raw_rows.length);
+        const pairs = groupRowsIntoPairs(raw_rows);
+
+        // NO shuffle if you want same order for everyone
+        const block1 = pairs.slice(0, 100);
+        const block2 = pairs.slice(100, 200);
+        const block3 = pairs.slice(200, 300);
+
+        const timeline = [];
+
+        // preload all images
+        const allStimPaths = pairs.flatMap(p => [p.left_img, p.right_img]);
+        const preload = {
+          type: jsPsychPreload,
+          images: [...new Set(allStimPaths.concat([MASK_PATH]))]
+        };
+        timeline.push(preload);
+
+        const instructions = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+            <div style="max-width: 800px; margin: auto; text-align:left;">
+              <h2>Numerosity discrimination task</h2>
+              <p>On each trial, you will see two dot patterns, one on the left and one on the right.</p>
+              <p>Your task is to choose which side has <strong>more dots</strong>.</p>
+              <p>Use the <strong>F</strong> key for the left image and <strong>J</strong> for the right image.</p>
+              <p>Each trial:</p>
+              <ul>
+                <li>Fixation cross (500 ms)</li>
+                <li>Dot patterns (250 ms)</li>
+                <li>Noise mask (150 ms)</li>
+                <li>Black screen until you respond (F/J)</li>
+                <li>Blank interval before the next trial</li>
+              </ul>
+              <p>Press any key to begin.</p>
+            </div>
+          `
+        };
+        timeline.push(instructions);
+
+        timeline.push(makeBlock(block1, 1));
+        timeline.push(makeBreakScreen(1));
+        timeline.push(makeBlock(block2, 2));
+        timeline.push(makeBreakScreen(2));
+        timeline.push(makeBlock(block3, 3));
+
+        jsPsych.run(timeline);
+      })
+      .catch(err => console.error("Error loading pairs metadata:", err));
+
+    // ---- functions ----
+    function groupRowsIntoPairs(rows) {
+      const byPair = {};
+      rows.forEach(r => {
+        if (!byPair[r.pair_num]) byPair[r.pair_num] = [];
+        byPair[r.pair_num].push(r);
+      });
+
+      const pairs = [];
+      Object.keys(byPair).forEach(k => {
+        const pairRows = byPair[k];
+        if (pairRows.length !== 2) {
+          console.warn("Pair_num", k, "does not have exactly 2 rows:", pairRows);
+          return;
+        }
+
+        const r_left  = pairRows.find(r => r.position === "left");
+        const r_right = pairRows.find(r => r.position === "right");
+
+        if (!r_left || !r_right) {
+          console.warn("Could not find left/right for pair_num", k, pairRows);
+          return;
+        }
+
+        const left_src  = String(r_left.image_file);
+        const right_src = String(r_right.image_file);
+
+        pairs.push({
+          pair_num: parseInt(k),
+          left_img: left_src,
+          right_img: right_src,
+          left_n: r_left.numerosity,
+          right_n: r_right.numerosity,
+          pair_ratio: r_left.pair_ratio,
+          greater_side: r_left.greater_side,
+          stimulus_html: `
+            <div class="stim-container">
+              <img src="${left_src}" class="stim-img">
+              <img src="${right_src}" class="stim-img">
+            </div>`
+        });
+      });
+
+      console.log("Example pair object:", pairs[0]); // debug
+      console.log("Stimulus HTML example:", pairs[0].stimulus_html); // debug
+      return pairs;
+    }
+
+    function makeBlock(pairs, blockIndex) {
+      const trials = [];
+
+      // block header
+      trials.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<div style="text-align:center;"><h2>Block ${blockIndex} of 3</h2><p>Press any key to start.</p></div>`
+      });
+
+      const trialTimeline = {
+        timeline: [
+          // 1) Fixation
+          {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: '<div class="fixation-cross">+</div>',
+            choices: "NO_KEYS",
+            trial_duration: 500
+          },
+          // 2) Stimulus pair (no response, 250 ms)
+          {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: jsPsych.timelineVariable('stimulus_html'),
+            choices: "NO_KEYS",
+            trial_duration: 250
+          },
+          // 3) Noise mask
+          {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: function() {
+              return `
+                <div class="stim-container">
+                  <img src="${MASK_PATH}" class="stim-img">
+                  <img src="${MASK_PATH}" class="stim-img">
+                </div>`;
+            },
+            choices: "NO_KEYS",
+            trial_duration: 150
+          },
+          // 4) Black screen until response F/J
+          {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: '<div style="width:100vw;height:100vh;background-color:black;"></div>',
+            choices: [LEFT_KEY, RIGHT_KEY],
+            response_ends_trial: true,
+            data: function() {
+              const left_n  = jsPsych.timelineVariable('left_n');
+              const right_n = jsPsych.timelineVariable('right_n');
+              const correct_key = left_n > right_n ? LEFT_KEY : RIGHT_KEY;
+              return {
+                task: "numerosity_discrimination",
+                block: blockIndex,
+                pair_num: jsPsych.timelineVariable('pair_num'),
+                left_n: left_n,
+                right_n: right_n,
+                pair_ratio: jsPsych.timelineVariable('pair_ratio'),
+                correct_key: correct_key
+              };
+            },
+            on_finish: function(data) {
+              data.correct = data.response === data.correct_key;
+            }
+          },
+          // 5) ITI 1250-1750 ms
+          {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: '<div style="width:100vw;height:100vh;background-color:black;"></div>',
+            choices: "NO_KEYS",
+            trial_duration: function() {
+              return 1250 + Math.floor(Math.random() * 501);
+            }
+          }
+        ],
+        timeline_variables: pairs
+      };
+
+      trials.push(trialTimeline);
+      return { timeline: trials };
+    }
+
+    function makeBreakScreen(blockIndex) {
+      if (blockIndex >= 3) return []; // no break after last block
+      return {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+          <div style="max-width:600px;margin:auto;text-align:center;">
+            <h2>End of Block ${blockIndex}</h2>
+            <p>You can take a short break now.</p>
+            <p>Press any key to continue to the next block.</p>
+          </div>
+        `
+      };
+    }
+
+  </script>
+</html>
