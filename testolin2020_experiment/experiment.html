@@ -53,9 +53,6 @@
             saveDataToOSF();
           }
         }
-      },
-      on_finish: function() {
-        saveDataToOSF(true);
       }
     });
     
@@ -432,8 +429,8 @@
             choices: [LEFT_KEY, RIGHT_KEY],
             response_ends_trial: true,
             data: function() {
-              const left_n  = Number(jsPsych.timelineVariable('left_n'));
-              const right_n = Number(jsPsych.timelineVariable('right_n'));
+              const left_n  = jsPsych.timelineVariable('left_n');
+              const right_n = jsPsych.timelineVariable('right_n');
               const correct_key = left_n > right_n ? LEFT_KEY : RIGHT_KEY;
               return {
                 task: "numerosity_discrimination",

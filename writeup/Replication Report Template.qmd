@@ -112,12 +112,160 @@ A: First, based on the exclusion criteria established, trials where a response i
 ### Data Preparation
 
 #### Load Relevant Libraries and Functions
+library(tidyverse)
+library(broom)
 
 #### Import data
+
+select <- dplyr::select
+filter <- dplyr::filter
+
+metadata <- read_csv("/Users/annacao/Documents/github/testolin2020/testolin2020_experiment/paired_images/pairs_metadata.csv") %>%
+    select(
+      pair_num,
+      pair_order,
+      pair_ratio,
+      left_image_id = image_id,
+      left_numerosity = numerosity,
+      left_TSA = TSA,
+      left_FA = FA,
+      left_CH = CH,
+      left_cumArea = cumArea,
+      left_role = role,   # anchor or partner
+      position,   # which side this image is on
+      greater_role,    # in this pair which role has more dots
+      greater_side     # in this pair which side has more dots
+    )
+
+left_stim <- metadata %>%
+    filter(position == "left") %>%
+    select(-position)
+
+right_stim <- metadata %>%
+    filter(position == "right") %>%
+    select(
+      pair_order,
+      right_image_id = left_image_id,
+      right_numerosity = left_numerosity,
+      right_TSA = left_TSA,
+      right_FA = left_FA,
+      right_CH = left_CH,
+      right_cumArea = left_cumArea,
+      right_role = left_role
+    )
+
+pairs_complete <- left_stim %>%
+    left_join(right_stim, by = "pair_order") %>%
+    select(
+      pair_order,
+      pair_ratio,
+      left_image_id, left_numerosity, left_TSA, left_FA, left_CH, left_cumArea, left_role,
+      right_image_id, right_numerosity, right_TSA, right_FA, right_CH, right_cumArea, right_role,
+      greater_role, greater_side
+    )
+
+pairs_complete <- pairs_complete %>% 
+  mutate(
+    left_Size    = (left_TSA  / left_numerosity)^2,
+    right_Size   = (right_TSA / right_numerosity)^2,
+    left_Spacing = (left_FA   / left_numerosity)^2,
+    right_Spacing= (right_FA  / right_numerosity)^2,
+  )
+
+pairs_complete <- pairs_complete %>% 
+  mutate(
+    log_num_ratio = log2(right_numerosity) - log2(left_numerosity),
+    log_size_ratio = log2(right_Size) - log2(left_Size),
+    log_spacing_ratio = log2(right_Spacing) - log2(left_Spacing)
+  )
+
+pairs_complete <- pairs_complete %>% 
+  mutate(
+    congruent_spacing = sign(log_num_ratio) == sign(log_spacing_ratio),
+    congruent_size    = sign(log_num_ratio) == sign(log_size_ratio)
+  )
+
+
+# load participant data
+load_participant_data <- function(participant_path) {
+  participant_data <- read_csv(participant_path) %>%
+    filter(task == "numerosity_discrimination") %>%
+    select(
+      pair_order,
+      pair_num,
+      pair_ratio,
+      rt,
+      response,
+      trial_index,
+      time_elapsed,
+      participant_id,
+      block
+    )
+  
+  return(participant_data)
+}
+
+data_path <- list.files(
+  path = "/Users/annacao/Documents/github/testolin2020/data", 
+  pattern = "*.csv", 
+  full.names = TRUE
+)
+
+all_data <- map_dfr(data_path, function(file) {
+  data <- load_participant_data(file)
+  name <- unique(data$participant_id)
+  message("Loaded participant: ", name)
+  data
+})
+  
 
 #### Data exclusion / filtering
 
 #### Prepare data for analysis - create columns etc.
+  
+# participant correctness column 
+compute_correctness <- function(merged_data) {
+  merged_data %>%
+    mutate(
+      correct_response = case_when(
+        greater_side == "left" ~ "f",
+        greater_side == "right" ~ "j",
+        TRUE ~ NA_character_
+      ),
+      correct = (response == correct_response)
+    )
+}
+
+  merged <- all_data %>%
+    left_join(pairs_complete, by = c("pair_order")) %>%
+    compute_correctness() %>%
+    
+    group_by(participant_id, block) %>%
+    mutate(trial_in_block = row_number()) %>%
+    ungroup()
+  
+  qc <- merged %>%
+    group_by(participant_id) %>%
+    summarise(
+      n_trials   = n(),
+      n_missing  = sum(is.na(left_numerosity)),
+      mean_correct = mean(correct, na.rm = TRUE),
+      .groups = "drop"
+    )
+  
+  qc %>% 
+    rowwise() %>%
+    mutate(
+      msg = sprintf(
+        "Participant %s: %d trials, %d missing merges, %.1f%% correct",
+        participant_id, n_trials, n_missing, 100 * mean_correct
+      )
+    ) %>%
+    pull(msg) %>%
+    walk(message)
+
+
+
 ```
 
 ### Confirmatory analysis
@@ -126,12 +274,302 @@ I will fit the GLMM model to the dataframe. Specifically, fixed effects will be 
 
 ```{r}
 
+summary_stats <- merged %>%
+    group_by(participant_id) %>%
+    summarise(
+      n_trials = n(),
+      accuracy = mean(correct, na.rm = TRUE),
+      mean_rt = mean(rt, na.rm = TRUE),
+      median_rt = median(rt, na.rm = TRUE),
+      .groups = "drop"
+    )
+
+#### confirmatory GLM
+ merged <- merged %>%
+  mutate(
+    # 1 = chose right (J), 0 = chose left (F)
+    chose_right = if_else(response == "j", 1L, 0L)
+  )
+
+fit_glm_per_participant <- function(data) {
+  data %>%
+    group_by(participant_id) %>%
+    group_modify(~{
+      model <- glm(
+        chose_right ~ log_num_ratio + log_size_ratio + log_spacing_ratio,
+        data = .x,
+        family = binomial(link = "probit")
+      )
+      tidy(model) %>%
+        mutate(
+          participant_id = unique(.x$participant_id),
+          n_trials = nrow(.x),
+          pseudo_r2 = 1 - model$deviance / model$null.deviance
+        )
+    }) %>%
+    ungroup()
+}
+
+glm_results <- fit_glm_per_participant(merged)
+
+
 ```
 
 
 *Side-by-side graph with original graph is ideal here*
 
 ```{r}
+beta_wide <- glm_results %>%
+  filter(term %in% c("log_num_ratio", "log_size_ratio", "log_spacing_ratio")) %>%
+  select(participant_id, term, estimate) %>%
+  pivot_wider(
+    names_from  = term,
+    values_from = estimate
+  ) %>%
+  rename(
+    betaNum     = log_num_ratio,
+    betaSize    = log_size_ratio,
+    betaSpacing = log_spacing_ratio
+  )
+
+beta_long <- beta_wide %>%
+  pivot_longer(cols = c(betaNum, betaSize, betaSpacing),
+               names_to = "dimension",
+               values_to = "beta")
+
+
+#### scatter plots for beta_numerosity, beta_spacing, beta_size
+scatter_theme <- theme_classic() +
+  theme(
+    axis.title = element_text(size = 12),
+    axis.text  = element_text(size = 10)
+  )
+
+# Panel 1: βNum vs βSize
+p_num_size <- ggplot(beta_wide, aes(x = betaSize, y = betaNum)) +
+  geom_hline(yintercept = 0, colour = "grey70") +
+  geom_vline(xintercept = 0, colour = "grey70") +
+  geom_abline(intercept = 0, slope = 1, colour = "grey85") +
+  geom_abline(intercept = 0, slope = -1, colour = "grey85") +
+  geom_point(shape = 21, colour = "red", fill = NA, size = 2) +
+  coord_equal(xlim = c(-6, 6), ylim = c(-6, 6)) +
+  labs(
+    x = expression(beta[Size]),
+    y = expression(beta[Num])
+  ) +
+  scatter_theme
+
+# Panel 2: βNum vs βSpacing
+p_num_spacing <- ggplot(beta_wide, aes(x = betaSpacing, y = betaNum)) +
+  geom_hline(yintercept = 0, colour = "grey70") +
+  geom_vline(xintercept = 0, colour = "grey70") +
+  geom_abline(intercept = 0, slope = 1, colour = "grey85") +
+  geom_abline(intercept = 0, slope = -1, colour = "grey85") +
+  geom_point(shape = 21, colour = "red", fill = NA, size = 2) +
+  coord_equal(xlim = c(-6, 6), ylim = c(-6, 6)) +
+  labs(
+    x = expression(beta[Spacing]),
+    y = expression(beta[Num])
+  ) +
+  scatter_theme
+
+# Panel 3: βSpacing vs βSize
+p_spacing_size <- ggplot(beta_wide, aes(x = betaSize, y = betaSpacing)) +
+  geom_hline(yintercept = 0, colour = "grey70") +
+  geom_vline(xintercept = 0, colour = "grey70") +
+  geom_abline(intercept = 0, slope = 1, colour = "grey85") +
+  geom_abline(intercept = 0, slope = -1, colour = "grey85") +
+  geom_point(shape = 21, colour = "red", fill = NA, size = 2) +
+  coord_equal(xlim = c(-6, 6), ylim = c(-6, 6)) +
+  labs(
+    x = expression(beta[Size]),
+    y = expression(beta[Spacing])
+  ) +
+  scatter_theme
+
+
+#### individual GLM psychometric curve
+library(dplyr)
+library(ggplot2)
+library(broom)
+
+add_congruency_flags <- function(df,
+                                 size_thresh    = 0.7,  # |log2 ratio| threshold
+                                 spacing_thresh = 0.7) {
+  df %>%
+    mutate(
+      size_extreme      = abs(log_size_ratio)    >= size_thresh,
+      spacing_extreme   = abs(log_spacing_ratio) >= spacing_thresh
+    )
+}
+
+merged_flagged <- add_congruency_flags(merged)
+
+plot_psychometric_participant <- function(df, pid,
+                                          size_thresh = 0.7,
+                                          spacing_thresh = 0.7) {
+  # subset to one participant and add flags
+  d <- df %>%
+    filter(participant_id == pid) %>%
+    add_congruency_flags(size_thresh = size_thresh,
+                         spacing_thresh = spacing_thresh)
+  
+  # fit the confirmatory GLM (probit)
+  m <- glm(
+    chose_right ~ log_num_ratio + log_size_ratio + log_spacing_ratio,
+    data   = d,
+    family = binomial(link = "probit")
+  )
+  
+  # ---- empirical points: p(ChooseRight) by num ratio & condition ----
+  
+  # all trials (black circles)
+  emp_all <- d %>%
+    group_by(log_num_ratio) %>%
+    summarise(
+      p_right = mean(chose_right),
+      n       = n(),
+      .groups = "drop"
+    )
+  
+  # SIZE: extreme trials only (red)
+  size_ext <- d %>% filter(size_extreme)
+  
+  emp_size_cong <- size_ext %>%
+    filter(congruent_size) %>%
+    group_by(log_num_ratio) %>%
+    summarise(p_right = mean(chose_right),
+              .groups = "drop")
+  
+  emp_size_incong <- size_ext %>%
+    filter(!congruent_size) %>%
+    group_by(log_num_ratio) %>%
+    summarise(p_right = mean(chose_right),
+              .groups = "drop")
+  
+  # SPACING: extreme trials only (green)
+  spacing_ext <- d %>% filter(spacing_extreme)
+  
+  emp_spacing_cong <- spacing_ext %>%
+    filter(congruent_spacing) %>%
+    group_by(log_num_ratio) %>%
+    summarise(p_right = mean(chose_right),
+              .groups = "drop")
+  
+  emp_spacing_incong <- spacing_ext %>%
+    filter(!congruent_spacing) %>%
+    group_by(log_num_ratio) %>%
+    summarise(p_right = mean(chose_right),
+              .groups = "drop")
+  
+  # ---- predicted curves from GLM ----
+  # grid of numerosity ratios
+  x_grid <- seq(min(d$log_num_ratio), max(d$log_num_ratio), length.out = 200)
+  
+  # helper: mean log ratios in each extreme subset for offsets
+  mean_size_cong <- mean(emp_size_cong$log_num_ratio * 0 + 
+                           (size_ext %>% filter(congruent_size))$log_size_ratio)
+  mean_size_incong <- mean(size_ext %>% filter(!congruent_size) %>% pull(log_size_ratio))
+  mean_spacing_cong <- mean(spacing_ext %>% filter(congruent_spacing) %>% pull(log_spacing_ratio))
+  mean_spacing_incong <- mean(spacing_ext %>% filter(!congruent_spacing) %>% pull(log_spacing_ratio))
+  
+  # baseline: all trials, non-numerical dimensions set to 0
+  grid_all <- data.frame(
+    log_num_ratio   = x_grid,
+    log_size_ratio  = 0,
+    log_spacing_ratio = 0,
+    cond = "All trials"
+  )
+  
+  # size congruent / incongruent (vary size, spacing=0)
+  grid_size_cong <- data.frame(
+    log_num_ratio   = x_grid,
+    log_size_ratio  = mean_size_cong,
+    log_spacing_ratio = 0,
+    cond = "Size congruent"
+  )
+  grid_size_incong <- data.frame(
+    log_num_ratio   = x_grid,
+    log_size_ratio  = mean_size_incong,
+    log_spacing_ratio = 0,
+    cond = "Size incongruent"
+  )
+  
+  # spacing congruent / incongruent (vary spacing, size=0)
+  grid_spacing_cong <- data.frame(
+    log_num_ratio   = x_grid,
+    log_size_ratio  = 0,
+    log_spacing_ratio = mean_spacing_cong,
+    cond = "Spacing congruent"
+  )
+  grid_spacing_incong <- data.frame(
+    log_num_ratio   = x_grid,
+    log_size_ratio  = 0,
+    log_spacing_ratio = mean_spacing_incong,
+    cond = "Spacing incongruent"
+  )
+  
+  grid_all_curves <- bind_rows(
+    grid_all,
+    grid_size_cong,
+    grid_size_incong,
+    grid_spacing_cong,
+    grid_spacing_incong
+  ) %>%
+    mutate(p_hat = predict(m, newdata = ., type = "response"))
+  
+  # ---- plot ----
+  ggplot() +
+    # black: all trials (points + solid curve)
+    geom_point(data = emp_all,
+               aes(x = log_num_ratio, y = p_right),
+               shape = 21, size = 2, colour = "black") +
+    geom_line(data = grid_all_curves %>% filter(cond == "All trials"),
+              aes(x = log_num_ratio, y = p_hat),
+              colour = "black") +
+    
+    # red: size congruent (dashed line + open circles)
+    geom_line(data = grid_all_curves %>% filter(cond == "Size congruent"),
+              aes(x = log_num_ratio, y = p_hat),
+              colour = "red", linetype = "dashed") +
+    geom_point(data = emp_size_cong,
+               aes(x = log_num_ratio, y = p_right),
+               colour = "red", shape = 1, size = 2) +
+    
+    # red: size incongruent (dotted line + small dots)
+    geom_line(data = grid_all_curves %>% filter(cond == "Size incongruent"),
+              aes(x = log_num_ratio, y = p_hat),
+              colour = "red", linetype = "dotted") +
+    geom_point(data = emp_size_incong,
+               aes(x = log_num_ratio, y = p_right),
+               colour = "red", shape = 16, size = 1.5) +
+    
+    # green: spacing congruent (dashed line + open circles)
+    geom_line(data = grid_all_curves %>% filter(cond == "Spacing congruent"),
+              aes(x = log_num_ratio, y = p_hat),
+              colour = "green4", linetype = "dashed") +
+    geom_point(data = emp_spacing_cong,
+               aes(x = log_num_ratio, y = p_right),
+               colour = "green4", shape = 1, size = 2) +
+    
+    # green: spacing incongruent (dotted line + small dots)
+    geom_line(data = grid_all_curves %>% filter(cond == "Spacing incongruent"),
+              aes(x = log_num_ratio, y = p_hat),
+              colour = "green4", linetype = "dotted") +
+    geom_point(data = emp_spacing_incong,
+               aes(x = log_num_ratio, y = p_right),
+               colour = "green4", shape = 16, size = 1.5) +
+    
+    coord_cartesian(ylim = c(0, 1), xlim = c(-1, 1)) +
+    labs(
+      x = expression("Numerosity Ratio (log"[2]*")"),
+      y = "p(Choose Right)",
+      title = paste("Participant", pid)
+    ) +
+    theme_classic()
+}
+
+
 
 ```
 
@@ -139,6 +577,28 @@ I will fit the GLMM model to the dataframe. Specifically, fixed effects will be 
 ### Exploratory analyses
 
 Any follow-up analyses desired (not required).  
+
+```{r}
+#### GLMM analysis
+install.packages(c("lme4", "broom.mixed", "performance"))
+library(lme4)
+library(broom.mixed)
+library(dplyr)
+
+glmm_model <- glmer(
+  chose_right ~ log_num_ratio + log_size_ratio + log_spacing_ratio + (1 | participant_id),
+  data = merged,
+  family = binomial(link = "probit"),
+  control = glmerControl(optimizer = "bobyqa")
+)
+
+summary(glmm_model)
+
+glmm_results <- broom.mixed::tidy(glmm_model, effects = "fixed")
+
+glmm_results
+```
+
 
 ## Discussion
 
