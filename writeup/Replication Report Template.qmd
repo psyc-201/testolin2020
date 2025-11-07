@@ -569,7 +569,9 @@ plot_psychometric_participant <- function(df, pid,
     theme_classic()
 }
 
+example_id <- unique(merged_flagged$participant_id)[2]
 
+plot_psychometric_participant(merged_flagged, example_id)
 
 ```
 
