@@ -6,6 +6,7 @@
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
     <link href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
   <style>
@@ -36,16 +37,77 @@
 
     const MASK_PATH = 'paired_images/mask_bw.png';     // no leading slash
     const PAIRS_JSON_PATH = 'pairs_metadata.json';      // no leading slash
-
+    const DEMO_LEFT_FIXDOT   = 'paired_images/demo_img_01691.png'; // page 3 left
+    const DEMO_RIGHT_FIXDOT  = 'paired_images/demo_img_21805.png'; // page 3 right
+    const DEMO_LEFT_PRACTICE = 'paired_images/demo_img_20941.png'; // page 7 left
+    const DEMO_RIGHT_PRACTICE= 'paired_images/demo_img_01346.png';
     const LEFT_KEY  = 'f';
     const RIGHT_KEY = 'j';
+    const DATAPIPE_EXPERIMENT_ID = "GTzMyrVFaoMb";
 
     const jsPsych = initJsPsych({
+      on_trial_finish: function(data) {
+        if (data.task === 'numerosity_discrimination') {
+          const trial_count = jsPsych.data.get().filter({task: 'numerosity_discrimination'}).count();
+          if (trial_count % 10 === 0) {
+            saveDataToOSF();
+          }
+        }
+      },
       on_finish: function() {
-        jsPsych.data.displayData();
+        saveDataToOSF(true);
+      }
+    });
+    
+    const participant_id = jsPsych.randomization.randomID(10);
+
+    function seededRandom(seed) {
+      let state = seed;
+      return function() {
+        state = (state * 1664525 + 1013904223) % 4294967296;
+        return state / 4294967296;
+      };
+    }
+
+    const rng = seededRandom(12345);
+
+    function saveDataToOSF(is_final = false) {
+      const trial_data = jsPsych.data.get().filter({task: 'numerosity_discrimination'});
+      if (trial_data.count() === 0) return;
+      const filename = `${participant_id}_${is_final ? 'final' : 'partial'}_${Date.now()}.csv`;
+      jsPsych.data.get().filter({task: 'numerosity_discrimination'}).localSave('csv', filename);
+      fetch(`https://pipe.jspsych.org/api/data/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*'
+        },
+        body: JSON.stringify({
+        experimentID: DATAPIPE_EXPERIMENT_ID,
+        filename: filename,
+        data: trial_data.csv()
+        })
+      })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      console.log(`Data ${is_final ? 'final' : 'partial'} save successful`);
+    })
+    .catch(error => {
+      console.error('Error saving to DataPipe:', error);
+      alert('Data save to server failed. File will download to your computer.');
+    });
+    }
+
+    window.addEventListener('beforeunload', function(e) {
+      const trial_data = jsPsych.data.get().filter({task: 'numerosity_discrimination'});
+      if (trial_data.count() > 0) {
+        saveDataToOSF();
       }
     });
 
+    
     // ---- main: load metadata, then build timeline, then run ----
     fetch(PAIRS_JSON_PATH)
       .then(response => response.json())
@@ -60,8 +122,23 @@
 
         const timeline = [];
 
+        jsPsych.data.addProperties({
+      participant_id: participant_id,
+      experiment: 'testolin2020_replication',
+      date: new Date().toISOString()
+    });
+
+
         // preload all images
         const allStimPaths = pairs.flatMap(p => [p.left_img, p.right_img]);
+        
+        const demoImages = [
+          DEMO_LEFT_FIXDOT,
+          DEMO_RIGHT_FIXDOT,
+          DEMO_LEFT_PRACTICE,
+          DEMO_RIGHT_PRACTICE
+        ];
+
         const preload = {
           type: jsPsychPreload,
           images: [...new Set(allStimPaths.concat([MASK_PATH]))]
@@ -76,19 +153,148 @@
               <p>On each trial, you will see two dot patterns, one on the left and one on the right.</p>
               <p>Your task is to choose which side has <strong>more dots</strong>.</p>
               <p>Use the <strong>F</strong> key for the left image and <strong>J</strong> for the right image.</p>
-              <p>Each trial:</p>
+              <p>In each trial, You'll see the following in this exact order:</p>
               <ul>
-                <li>Fixation cross (500 ms)</li>
-                <li>Dot patterns (250 ms)</li>
-                <li>Noise mask (150 ms)</li>
-                <li>Black screen until you respond (F/J)</li>
+                <li>Fixation cross</li>
+                <li>Two dot patterns</li>
+                <li>Two noise mask</li>
+                <li>Black screen (respond (F/J) here!)</li>
                 <li>Blank interval before the next trial</li>
               </ul>
-              <p>Press any key to begin.</p>
+              <p>We'll walk through an example and a practice trial before you begin</p>
+              <p>Press any key to continue.</p>
             </div>
           `
         };
+
+        const instructions2 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+              <p>At the beginning of each trial, you will see a <strong>fixation cross</strong> at the center of the screen for <strong>500 ms</strong>. 
+                Please keep your eyes on this cross.</p>
+              <p>Press any key to continue.</p>
+          `
+        };
+
+        const instructions3 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+            <p>Immediately after the fixation cross, you will see <strong>two dot patterns</strong>, one on the left and one on the right.</p>
+        <p>These will be shown very briefly, for <strong>250 ms</strong>.</p>
+        <p>Your job is to decide which side has <strong>more dots</strong>.</p> 
+      <p>Press any key to continue.</p>
+          `
+        };
+
+        const instructions4 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+        <p>As soon as the dot patterns disappear, they will be replaced by <strong>two noise masks</strong> in the same locations.</p>
+        <p>These masks will be shown for <strong>150 ms</strong>.</p>
+      <p>Press any key to continue.</p>
+          `
+        };
+        
+        const instructions5 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+    
+      <p>After the masks, the screen will turn black and stay black until you respond.</p>
+      <p>On each trial:</p>
+      <p>If you think the <strong>left</strong> side had more dots, press <strong>F</strong>.</p>
+      <p>If you think the <strong>right</strong> side had more dots, press <strong>J</strong>.</p>
+      <p>After you make your choice, the experiment will automatically move on to the next trial.</p>
+      <p>Press <strong>F</strong> or <strong>J</strong> to continue.</p>
+    
+  `,
+          choices: [LEFT_KEY, RIGHT_KEY]
+        };
+
+        const instructions6 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+      <p>You will complete <strong>3 blocks</strong> in total.</p>
+      <p>Each block has <strong>100 trials</strong>. There will be a short break between blocks,
+         but no break between individual trials.</p>
+      <p>Next, you will do <strong>one practice trial</strong> to get a sense of the timing.</p>
+      <p>Press any key to start the practice trial.</p>
+  `
+      };
+
+      const practice_trial = {
+  timeline: [
+    // Fixation (500 ms)
+    {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<div class="fixation-cross">+</div>',
+      choices: "NO_KEYS",
+      trial_duration: 500
+    },
+    // Dot patterns (250 ms)
+    {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <div class="stim-container">
+          <img src="${DEMO_LEFT_PRACTICE}"  class="stim-img">
+          <img src="${DEMO_RIGHT_PRACTICE}" class="stim-img">
+        </div>
+      `,
+      choices: "NO_KEYS",
+      trial_duration: 250
+    },
+    // Noise masks (150 ms)
+    {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <div class="stim-container">
+          <img src="${MASK_PATH}" class="stim-img">
+          <img src="${MASK_PATH}" class="stim-img">
+        </div>
+      `,
+      choices: "NO_KEYS",
+      trial_duration: 150
+    },
+    // Black screen until response
+    {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<div style="width:100vw;height:100vh;background-color:black;"></div>',
+      choices: [LEFT_KEY, RIGHT_KEY],
+      response_ends_trial: true,
+      data: {
+        task: "practice",
+        left_img: DEMO_LEFT_PRACTICE,
+        right_img: DEMO_RIGHT_PRACTICE
+      }
+    },
+    // ITI (1250–1750 ms)
+    {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<div style="width:100vw;height:100vh;background-color:black;"></div>',
+      choices: "NO_KEYS",
+      trial_duration: function() {
+        return 1250 + Math.floor(Math.random() * 501);
+      }
+    }
+  ]
+};
+
+        const instructions7 = {
+  type: jsPsychHtmlKeyboardResponse,
+  stimulus: `
+      <p>You just completed a practice trial. Great job!</p>
+      <p>When you are ready, press any key to begin the actual study.</p>
+    </div>
+  `
+};
+        
         timeline.push(instructions);
+        timeline.push(instructions2);
+        timeline.push(instructions3);
+        timeline.push(instructions4);
+        timeline.push(instructions5);
+        timeline.push(instructions6);
+        timeline.push(practice_trial);
+        timeline.push(instructions7);
 
         timeline.push(makeBlock(block1, 1));
         timeline.push(makeBreakScreen(1));
@@ -96,9 +302,41 @@
         timeline.push(makeBreakScreen(2));
         timeline.push(makeBlock(block3, 3));
 
+        const final_screen = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+        <div style="max-width: 600px; margin: auto; text-align: center;">
+          <h2>Experiment Complete!</h2>
+          <p>Please wait while we save your data...</p>
+          <div class="spinner" style="margin: 20px auto;"></div>
+        </div>
+      `,
+          choices: "NO_KEYS",
+          trial_duration: 2000,
+          on_finish: function() {
+          saveDataToOSF(true);
+      }
+    };
+        timeline.push(final_screen);
+
+        const thank_you = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+        <div style="max-width: 600px; margin: auto; text-align: center;">
+          <h2>Thank you for participating!</h2>
+          <p>Your data has been saved.</p>
+          <p>Participant ID: <strong>${participant_id}</strong></p>
+          <p>You may close this window.</p>
+        </div>
+      `
+    };
+        timeline.push(thank_you);
+
         jsPsych.run(timeline);
       })
       .catch(err => console.error("Error loading pairs metadata:", err));
+
+
 
     // ---- functions ----
     function groupRowsIntoPairs(rows) {
@@ -216,7 +454,7 @@
             stimulus: '<div style="width:100vw;height:100vh;background-color:black;"></div>',
             choices: "NO_KEYS",
             trial_duration: function() {
-              return 1250 + Math.floor(Math.random() * 501);
+              return 1250 + Math.floor(rng() * 501);
             }
           }
         ],

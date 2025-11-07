@@ -10,6 +10,9 @@ format:
 
 <!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
 
+Link to github folder: https://github.com/psyc-201/testolin2020
+Link to paradigm: https://psyc-201.github.io/testolin2020/testolin2020_experiment/experiment
+
 ## Introduction
 
 Justification: 
@@ -38,8 +41,6 @@ Is its estimate reported?
 Any measure of variability?
 - SE? 
 
-Link: https://github.com/AnnaWCao/testolin2020/tree/main
-
 
 ## Methods
 
@@ -47,13 +48,15 @@ Link: https://github.com/AnnaWCao/testolin2020/tree/main
 
 Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
 
-A: The original study found a medium effect size, R^2 = 0.55. To achieve 80%, 90%, 95% power to detect this effect size, 26, 35, 43 participants are needed, respectively, given significance level a = 0.05. Given that the study session is long (~30 mins), and that each participants see 300 trials, it might be more feasible to aim for a smaller sample size and a medium high power.
+A: The original study fitted a GLM model for each individaul, including 3 regressors numerosity, size, and spacing. The numerosity coefficient had the largest effect (t(39) = 23.54, p < 0.001); spacing coefficient also showed a significant effect (t(39) = 7.21, p < 0.001); size coefficient did not reveal a significant effect (t(39) = 1.37, p < 0.18). I calculated effect size by t/sqrt(n). Effect sizes for the numerosity, spacing, and sizing dimensions are 3.72 (very large), 1.14 (large), and 0.22 (small), respectively. Observed powers are 100% (numerosity), 100% (spacing), 24% (size), respectively. 
+
+For numerosity dimension, 3, 4, 5 participants are needed to achieve 80%, 90%, 95% power. For spacing dimension, 8, 10, 13 participants are needed to achieve 80%, 90%, 95% power. For size dimension, 163, 219, 274 participants are needed to achieve 80%, 90%, 95% power. 
 
 ### Planned Sample
 
 Planned sample size and/or termination rule, sampling frame, known demographics if any, preselection rules if any.
 
-A: I plan to collect 25 samples. Participants will be college undergraduate students in the local San Diego area, such that the sample's mean age and education level will roughly match the original study sample which consisted of 40 volunteer students (mean age = 23.7 years, range = 20-28, females = 80%). 
+A: I plan to collect 30 samples, overpowered to account for a potentially high exclusion rate due to poor data quality or unfinished, given that the study is relatively long and tiring. Participants will be college undergraduate students in the local San Diego area, such that the sample's mean age and education level will roughly match the original study sample which consisted of 40 volunteer students (mean age = 23.7 years, range = 20-28, females = 80%). 
 
 ### Materials
 
@@ -121,7 +124,17 @@ A: First, based on the exclusion criteria established, trials where a response i
 
 I will fit the GLMM model to the dataframe. Specifically, fixed effects will be log-ratios of numerosity, size, spacing, random effects will be Participant-specific differences in slope. From the resulting model I will compare the effect sizes of numerosity, size, spacing, and individual difference, to determine which/whether dimension is the main predictor of performance (or which dimension dominates approximate number discrimination).  
 
+```{r}
+
+```
+
+
 *Side-by-side graph with original graph is ideal here*
+
+```{r}
+
+```
+
 
 ### Exploratory analyses
 
