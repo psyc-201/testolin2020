@@ -346,7 +346,8 @@
       });
 
       const pairs = [];
-      Object.keys(byPair).forEach(k => {
+      const sortedKeys = Object.keys(byPair).map(Number).sort((a, b) => a - b);
+      sortedKeys.forEach(k => {
         const pairRows = byPair[k];
         if (pairRows.length !== 2) {
           console.warn("Pair_num", k, "does not have exactly 2 rows:", pairRows);
@@ -365,7 +366,8 @@
         const right_src = String(r_right.image_file);
 
         pairs.push({
-          pair_num: parseInt(k),
+          pair_order: parseInt(k),
+          pair_num: r_left.pair_num,
           left_img: left_src,
           right_img: right_src,
           left_n: r_left.numerosity,
@@ -436,6 +438,7 @@
               return {
                 task: "numerosity_discrimination",
                 block: blockIndex,
+                pair_order: jsPsych.timelineVariable('pair_order'),
                 pair_num: jsPsych.timelineVariable('pair_num'),
                 left_n: left_n,
                 right_n: right_n,
