@@ -28,18 +28,17 @@ They recruited volunteer college students (n = 40) as huamn subjects. Study sess
 The key analysis that I'm trying to replicate is the GLM fit on individual level, and the coefficient fit for each dimension. I will use the original stimuli (the 300 sampled pairs). I could recruit less participants (n = 25, 300 trials/30 mins each)   
 
 What’s the measure of interest?
-- Accuracy on a dot array numerosity stroop task 
+- Probability of choosing the dot array on the right side as having more dots 
 
 What construct does it map to?
-- Human adults’ approximate representation of numerosity
+- Human adults’ perception of approximate numerosity
 
 Is its estimate reported?
-- Taking mean
-- Effect size R^2 = 0.55
-- Unit: Number of correct trials? 
+- effect size = 3.72, 1.14, 0.22 for numerosity, spacing, and size
+- Unit: choose_right = 0/1 on a trial 
 
 Any measure of variability?
-- SE? 
+- SE/error bars of beta coefficient
 
 
 ## Methods
@@ -312,7 +311,7 @@ fit_glm_per_participant <- function(data) {
 
 glm_results <- fit_glm_per_participant(merged)
 
-
+glm_results
 ```
 
 
@@ -582,7 +581,7 @@ Any follow-up analyses desired (not required).
 
 ```{r}
 #### GLMM analysis
-install.packages(c("lme4", "broom.mixed", "performance"))
+#install.packages(c("lme4", "broom.mixed", "performance"))
 library(lme4)
 library(broom.mixed)
 library(dplyr)
