@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.0.0"></script>
     <link href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
   <style>
@@ -30,6 +31,89 @@
     width: 500px;
     height: 500px;
     object-fit: contain;
+  }
+
+  .consent-box {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    text-align: left;
+  }
+  
+  .consent-box h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .consent-box p, .consent-box ul {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .consent-box ul {
+    margin-left: 20px;
+  }
+
+  .screen-size-container {
+    max-width: 700px;
+    margin: auto;
+    padding: 30px;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .screen-size-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .screen-size-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 30px 0;
+    text-align: left;
+  }
+  
+  .screen-size-option {
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: #f9f9f9;
+    text-align: left;
+  }
+  
+  .screen-size-option:hover {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+  }
+  
+  .screen-size-option input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.3);
+  }
+  
+  .screen-size-option label {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: black; 
+  }
+  
+  .screen-info {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff3cd;
+    color: #856404;
+    border-radius: 5px;
+    font-size: 14px;
   }
 </style>
   <body></body>
@@ -124,7 +208,123 @@
       date: new Date().toISOString()
     });
 
+        // CONSENT FORM
+        const consent_form = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `
+            <div class="consent-box">
+              <h2>Consent</h2>
+              
+              <p>You are being invited to participate in a research study titled “Reproducibility of Psychological Science and Instruction."
+              This study is being done by Dr. Bria Long from UC San Diego and associated graduate students in Experimental Methods course.
+              You were selected to participate in this study because you are an adult in the U.S. and have been a represented population in previous psychology studies.</p>
+              
+              <p>The purpose of this study is to better understand how well previously published studies in the psychological field replicate online and with different populations.
+              Your participation in this research should last approximately 5-30 minutes  If you agree to take part in this study, you may be asked to view a set of stimuli,
+              including pictures, sounds, written text, or videos and then giving some responses via key-presses, verbally, or with paper-and-pencil. We may also observe your
+              choices or preferences among an array of stimuli.  These stimuli will be taken directly from or closely adapted from studies that already exist in the published
+              psychological literature. Stimuli will include, e.g., pictures of objects and human faces, audio and video clips, short text passages, etc. None of the stimuli
+              will be disturbing, threatening, or offensive. The online and in-person experiments described in this protocol will take no more than 30 minutes. An example game
+              you might play would be to click on an image on the screen that matches a word you hear being said out loud. Your total expected time commitment for this study is
+              between 5-30 minutes, and is specified in the study description.</p>
 
+              <p>Your participation in this study is completely voluntary and you can withdraw at any time. Choosing not to participate or withdrawing will result in no penalty or loss 
+              of benefits to which you are entitled. You are free to skip any question that you choose.</p>
+
+              <p>We will not be asking for any personally identifying information, and we will handle responses as confidentially as possible. Your SONA or Prolific IDs will never 
+              be tied to your responses on this survey. However, we cannot guarantee the confidentiality of information transmitted over the Internet. To minimize this risk, data 
+              containing anything that might be personally identifiable (e.g. Prolific IDs or IP addresses) will be encrypted on transfer and storage and will only be accessible 
+              to qualified lab personnel. We will be keeping data collected as part of this experiment indefinitely. This anonymized data (containing neither Prolific IDs nor IP 
+              addresses) may be shared with the scientific community or with other participants to be used as stimuli in future studies.</p>
+
+              <p>If you have questions about this project or if you have a research-related problem, you may contact the researcher Anna Cao (cwenqing@ucsd.edu), or Dr. Bria Long (brlong@ucsd.edu). 
+              If you have any questions concerning your rights as a research subject, you may contact the UC San Diego Office of IRB Administration at irb@ucsd.edu or 858-246-4777.
+              By participating in this research you are indicating that you are at least 18 years old, have read this consent form, and agree to participate in this research study.
+              Please keep this consent form for your records.<p>
+              
+              <p>By proceeding, you indicate that:</p>
+              <ul>
+                <li>You are at least 18 years old</li>
+                <li>You have read and understood the information in the consenet form above</li>
+                <li>You voluntarily agree to participate in this study</li>
+              </ul>
+               <p>Press any key to continue.</p>
+            </div>
+
+            <p>Press any key to continue.</p>
+          `
+        };
+
+        // SCREEN SIZE SELECTION
+        const screen_size_selection = {
+          type: jsPsychSurveyHtmlForm,
+          preamble: `
+            <div class="screen-size-container">
+              <h2>Screen Size Information</h2>
+              <p>To ensure the experiment validity, please tell us about your display. (11-16 inch laptop is preferred)</p>
+              <p><strong>Please select your screen size:</strong></p>
+            </div>
+          `,
+          html: `
+            <div class="screen-size-options">
+              <div class="screen-size-option">
+                <input type="radio" id="laptop_small" name="screen_size" value="11-12 inch laptop" required>
+                <label for="laptop_small">11-12 inch Laptop</label>
+              </div>
+              
+              <div class="screen-size-option">
+                <input type="radio" id="laptop_medium" name="screen_size" value="13-14 inch laptop">
+                <label for="laptop_medium">13-14 inch Laptop</label>
+              </div>
+              
+              <div class="screen-size-option">
+                <input type="radio" id="laptop_large" name="screen_size" value="15-16 inch laptop">
+                <label for="laptop_exarge">15-16 inch Laptop</label>
+              </div>
+
+              <div class="screen-size-option">
+                <input type="radio" id="laptop_large" name="screen_size" value="17-19 inch laptop">
+                <label for="laptop_xlarge">17-19 inch Laptop</label>
+              </div>
+              
+              <div class="screen-size-option">
+                <input type="radio" id="desktop_standard" name="screen_size" value="20-27 inch desktop monitor">
+                <label for="desktop_standard">21-24 inch Desktop Monitor</label>
+              </div>
+              
+              <div class="screen-size-option">
+                <input type="radio" id="desktop_large" name="screen_size" value="27+ inch desktop monitor">
+                <label for="desktop_large">27+ inch Desktop Monitor</label>
+              </div>
+            
+          `,
+          button_label: 'Continue',
+          data: {
+            task: 'screen_size_selection',
+            screen_width_pixels: window.screen.width,
+            screen_height_pixels: window.screen.height,
+            window_width_pixels: window.innerWidth,
+            window_height_pixels: window.innerHeight,
+            pixel_ratio: window.devicePixelRatio
+          },
+          on_finish: function(data) {
+            // Extract screen size from form response
+            const response = data.response;
+            data.screen_size_category = response.screen_size;
+            
+            // Add screen info to all future trials
+            jsPsych.data.addProperties({
+              screen_size_category: response.screen_size,
+              screen_width_pixels: data.screen_width_pixels,
+              screen_height_pixels: data.screen_height_pixels,
+              window_width_pixels: data.window_width_pixels,
+              window_height_pixels: data.window_height_pixels,
+              pixel_ratio: data.pixel_ratio
+            });
+          }
+        };
+
+        
         // preload all images
         const allStimPaths = pairs.flatMap(p => [p.left_img, p.right_img]);
         
@@ -282,7 +482,8 @@
     </div>
   `
 };
-        
+        timeline.push(consent_form);
+        timeline.push(screen_size_selection);
         timeline.push(instructions);
         timeline.push(instructions2);
         timeline.push(instructions3);
@@ -302,7 +503,6 @@
           type: jsPsychHtmlKeyboardResponse,
           stimulus: `
         <div style="max-width: 600px; margin: auto; text-align: center;">
-          <h2>Experiment Complete!</h2>
           <p>Please wait while we save your data...</p>
           <div class="spinner" style="margin: 20px auto;"></div>
         </div>
@@ -320,6 +520,15 @@
           stimulus: `
         <div style="max-width: 600px; margin: auto; text-align: center;">
           <h2>Thank you for participating!</h2>
+
+          <p>This experiment investigates how humans perceive and discriminate between different quantities of objects.</p> 
+          <p>We are specifically interested in understanding whether people rely primarily on the actual number of items,</p> 
+          <p>or whether other visual features (like the total area covered by dots or how spaced out they are) also influence</p> 
+          <p>numerical judgments. Your responses will help us better understand the cognitive mechanisms underlying number perception.</p>
+
+          <p>To maintain the scientific integrity of this study, we kindly ask that you <strong>do not share</strong></p>
+          <p>details about the experimental procedures or purpose with others who might participate.</p> 
+
           <p>Your data has been saved.</p>
           <p>Participant ID: <strong>${participant_id}</strong></p>
           <p>You may close this window.</p>
