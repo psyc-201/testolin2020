@@ -128,6 +128,7 @@
     const LEFT_KEY  = 'f';
     const RIGHT_KEY = 'j';
     const DATAPIPE_EXPERIMENT_ID = "GTzMyrVFaoMb";
+    
 
     const jsPsych = initJsPsych({
       on_trial_finish: function(data) {
@@ -324,7 +325,112 @@
           }
         };
 
+        const age_collection = {
+        type: jsPsychSurveyHtmlForm,
+        preamble: `
+          <div class="screen-size-container">
+            <h2>Participant Information</h2>
+            <p>Please provide your age to help us understand our participant demographics.</p>
+          </div>
+        `,
+        html: `
+          <div class="screen-size-options">
+            <div class="screen-size-option" style="text-align: left;">
+              <label for="age" style="display: block; margin-bottom: 10px; color: black; font-size: 16px; font-weight: 500;">
+                Please enter your age:
+              </label>
+              <input 
+                type="number" 
+                id="age" 
+                name="age" 
+                min="18" 
+                max="120" 
+                required
+                style="width: 100px; padding: 8px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px;"
+                placeholder="e.g., 25"
+              >
+            </div>
+          </div>
+        `,
+        button_label: 'Continue',
+        data: {
+          task: 'age_collection'
+        },
+        on_finish: function(data) {
+          // Extract age from form response
+          const response = data.response;
+          data.participant_age = response.age;
+          
+          // Add age to all future trials
+          jsPsych.data.addProperties({
+            participant_age: response.age
+          });
+        }
+      };
         
+        const sona_info_collection = {
+  type: jsPsychSurveyHtmlForm,
+  preamble: `
+    <div class="screen-size-container">
+      <h2>SONA Information</h2>
+      <p><strong style="color: #d32f2f;">Important:</strong> Please enter your SONA ID to receive credit for this study.</p>
+      <p style="color: #d32f2f;"><strong>Without your SONA ID, we cannot award you credit.</strong></p>
+    </div>
+  `,
+  html: `
+    <div class="screen-size-options">
+      <div class="screen-size-option" style="text-align: left;">
+        <label for="sona_id" style="display: block; margin-bottom: 10px; color: black; font-size: 16px; font-weight: 500;">
+          SONA ID: <span style="color: #d32f2f;">*</span>
+        </label>
+        <input 
+          type="text" 
+          id="sona_id" 
+          name="sona_id" 
+          required
+          style="width: 300px; padding: 8px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px;"
+          placeholder="e.g., 12345"
+        >
+        <p style="font-size: 14px; color: #666; margin-top: 5px;">
+          You can find your SONA ID in your SONA account profile.
+        </p>
+      </div>
+      
+      <div class="screen-size-option" style="text-align: left; margin-top: 20px;">
+        <label for="time_slot" style="display: block; margin-bottom: 10px; color: black; font-size: 16px; font-weight: 500;">
+          Time Slot (Optional):
+        </label>
+        <input 
+          type="text" 
+          id="time_slot" 
+          name="time_slot"
+          style="width: 300px; padding: 8px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px;"
+          placeholder="e.g., Monday 2:00 PM or Slot 3"
+        >
+        <p style="font-size: 14px; color: #666; margin-top: 5px;">
+          Enter your assigned time slot if applicable.
+        </p>
+      </div>
+    </div>
+  `,
+  button_label: 'Continue',
+  data: {
+    task: 'sona_info_collection'
+  },
+  on_finish: function(data) {
+    const sonaResponse = data.response;
+    data.sona_id = sonaResponse.sona_id;
+    data.time_slot = sonaResponse.time_slot || 'not_provided';
+    
+    // Add SONA info to all future trials
+    jsPsych.data.addProperties({
+      sona_id: sonaResponse.sona_id,
+      time_slot: sonaResponse.time_slot || 'not_provided'
+    });
+  }
+};
+
+
         // preload all images
         const allStimPaths = pairs.flatMap(p => [p.left_img, p.right_img]);
         
@@ -484,6 +590,8 @@
 };
         timeline.push(consent_form);
         timeline.push(screen_size_selection);
+        timeline.push(age_collection);
+        timeline.push(sona_info_collection); 
         timeline.push(instructions);
         timeline.push(instructions2);
         timeline.push(instructions3);
