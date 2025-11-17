@@ -373,42 +373,26 @@
   preamble: `
     <div class="screen-size-container">
       <h2>SONA Information</h2>
-      <p><strong style="color: #d32f2f;">Important:</strong> Please enter your SONA ID to receive credit for this study.</p>
-      <p style="color: #d32f2f;"><strong>Without your SONA ID, we cannot award you credit.</strong></p>
+      <p><strong style="color: #d32f2f;">Important:</strong> Please enter your SONA time slot to receive credit for this study.</p>
+      <p style="color: #d32f2f;"><strong>Without your SONA time slot, we cannot award you credit.</strong></p>
     </div>
   `,
   html: `
     <div class="screen-size-options">
       <div class="screen-size-option" style="text-align: left;">
-        <label for="sona_id" style="display: block; margin-bottom: 10px; color: black; font-size: 16px; font-weight: 500;">
-          SONA ID: <span style="color: #d32f2f;">*</span>
-        </label>
-        <input 
-          type="text" 
-          id="sona_id" 
-          name="sona_id" 
-          required
-          style="width: 300px; padding: 8px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px;"
-          placeholder="e.g., 12345"
-        >
-        <p style="font-size: 14px; color: #666; margin-top: 5px;">
-          You can find your SONA ID in your SONA account profile.
-        </p>
-      </div>
-      
-      <div class="screen-size-option" style="text-align: left; margin-top: 20px;">
         <label for="time_slot" style="display: block; margin-bottom: 10px; color: black; font-size: 16px; font-weight: 500;">
-          Time Slot (Optional):
+          Time Slot: <span style="color: #d32f2f;">*</span>
         </label>
         <input 
           type="text" 
           id="time_slot" 
           name="time_slot"
+          required
           style="width: 300px; padding: 8px; font-size: 16px; border: 2px solid #ddd; border-radius: 5px;"
-          placeholder="e.g., Monday 2:00 PM or Slot 3"
+          placeholder="e.g., Nov 12, 2:00 PM" 
         >
         <p style="font-size: 14px; color: #666; margin-top: 5px;">
-          Enter your assigned time slot if applicable.
+          Enter your assigned time slot.
         </p>
       </div>
     </div>
@@ -419,13 +403,11 @@
   },
   on_finish: function(data) {
     const sonaResponse = data.response;
-    data.sona_id = sonaResponse.sona_id;
-    data.time_slot = sonaResponse.time_slot || 'not_provided';
+    data.time_slot = sonaResponse.time_slot 
     
     // Add SONA info to all future trials
     jsPsych.data.addProperties({
-      sona_id: sonaResponse.sona_id,
-      time_slot: sonaResponse.time_slot || 'not_provided'
+      time_slot: sonaResponse.time_slot 
     });
   }
 };
