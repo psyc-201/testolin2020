@@ -141,7 +141,8 @@
       }
     });
     
-    const participant_id = jsPsych.randomization.randomID(10);
+    let sona_id = jsPsych.data.urlVariables()['sona_id']
+    const participant_id = sona_id || jsPsych.randomization.randomID(10);
 
     function seededRandom(seed) {
       let state = seed;
@@ -627,7 +628,16 @@
     };
         timeline.push(thank_you);
 
+        if (sona_id) {
+        // If participant came from SONA, redirect them back for credit
+        jsPsych.run(timeline).then(() => {
+        window.location.href = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=2994&credit_token=e8857ddb312942f1866260cf2ce5c332&survey_code=XXXX " + sona_id;
+        });
+        } else {
+        // No SONA redirect needed
         jsPsych.run(timeline);
+      }
+
       })
       .catch(err => console.error("Error loading pairs metadata:", err));
 
