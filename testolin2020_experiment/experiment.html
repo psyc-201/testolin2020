@@ -141,7 +141,7 @@
       }
     });
     
-    let sona_id = jsPsych.data.urlVariables()['sona_id']
+    let sona_id = new URLSearchParams(window.location.search).get('sona_id');
     const participant_id = sona_id || jsPsych.randomization.randomID(10);
 
     function seededRandom(seed) {
