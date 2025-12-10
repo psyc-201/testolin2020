@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Wenqing Cao (cwenqing@ucsd.edu)">
+<meta name="dcterms.date" content="2025-12-10">
+
+<title>Replication of ‘Visual sense of number vs.&nbsp;sense of magnitude in humans and machines’ by Testolin, A., Dolfi, S., Rochus, M. et al.&nbsp;(2020, Sci Rep)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Replication Report Template_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Replication Report Template_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Replication Report Template_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Replication Report Template_files/libs/quarto-html/popper.min.js"></script>
+<script src="Replication Report Template_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Replication Report Template_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Replication Report Template_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Replication Report Template_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Replication Report Template_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Replication Report Template_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Replication Report Template_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#power-analysis" id="toc-power-analysis" class="nav-link" data-scroll-target="#power-analysis">Power Analysis</a></li>
+  <li><a href="#planned-sample" id="toc-planned-sample" class="nav-link" data-scroll-target="#planned-sample">Planned Sample</a></li>
+  <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials">Materials</a></li>
+  <li><a href="#procedure" id="toc-procedure" class="nav-link" data-scroll-target="#procedure">Procedure</a></li>
+  <li><a href="#analysis-plan" id="toc-analysis-plan" class="nav-link" data-scroll-target="#analysis-plan">Analysis Plan</a></li>
+  <li><a href="#differences-from-original-study" id="toc-differences-from-original-study" class="nav-link" data-scroll-target="#differences-from-original-study">Differences from Original Study</a></li>
+  <li><a href="#methods-addendum-post-data-collection" id="toc-methods-addendum-post-data-collection" class="nav-link" data-scroll-target="#methods-addendum-post-data-collection">Methods Addendum (Post Data Collection)</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data preparation</a></li>
+  <li><a href="#confirmatory-analysis" id="toc-confirmatory-analysis" class="nav-link" data-scroll-target="#confirmatory-analysis">Confirmatory analysis</a></li>
+  <li><a href="#exploratory-analyses" id="toc-exploratory-analyses" class="nav-link" data-scroll-target="#exploratory-analyses">Exploratory analyses</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a>
+  <ul class="collapse">
+  <li><a href="#summary-of-replication-attempt" id="toc-summary-of-replication-attempt" class="nav-link" data-scroll-target="#summary-of-replication-attempt">Summary of Replication Attempt</a></li>
+  <li><a href="#commentary" id="toc-commentary" class="nav-link" data-scroll-target="#commentary">Commentary</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Replication of ‘Visual sense of number vs.&nbsp;sense of magnitude in humans and machines’ by Testolin, A., Dolfi, S., Rochus, M. et al.&nbsp;(2020, Sci Rep)</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Wenqing Cao (cwenqing@ucsd.edu) </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
+<p>Link to github folder: https://github.com/psyc-201/testolin2020 Link to paradigm: https://psyc-201.github.io/testolin2020/testolin2020_experiment/experiment</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Justification:</p>
+<p>It is widely believed that the approximate number system (ANS) supports formation of non-exact representation of quantities in adults, children, and even animals (Dehaene, 2011). ANS affords abilities like quickly discriminating two different numerical quantities or estimating the amount of items. The acuity of discrimintation is proportional to the ratio of the two quantities, and is found to predict future math learning performance. However, debate exists around whether numerosity is the main perceptual feature driving ANS, or numerosity is actually estimated from non-numerical visual features. This paper attempted to reconcile this debate by testing deep neural networks and human participants in the same task, adopting a stimulus space that could disentangle the contribution of numerical and non-numerical features. For this replication project, I will try to replicate the human experiment in this paper. It is related to my side research interest of probing ANS in vision language models.</p>
+<p>Methods:</p>
+<p>The research question is whether visual numerosity is a primary perceptual attribute or whether people estimate numerosity from continuous magnitudes. To test this, researchers adopted the dot array comparison task, where the participant sees two side-by-side dot arrays for a limited period of time, and then needs to indicate which array has a higher <em>number</em> of dots. To quantitatively estimate the contribution of non-numerical features, researchers constructed a 3-D orthogonal stimulus space which includes 3 dimensions: numerosity, size, and spacing. Specifically, they generated a database of 21970 images of dot arrays by picking 13 levels on each dimension, each level put evenly on a log scale. They then randomly sampled 300 pairs of dot images from the database as test stimuli, encompassing ratios from 0.5 to 0.9, biasing the harder ratios. Participants indicated which image in the pair had more dots by pressing left or right arrows on keyboard.</p>
+<p>They recruited volunteer college students (n = 40) as huamn subjects. Study session length for each participant ~ 30 minutes. The power of their human behavioral finding was strong, mean accuracy = 83%, with significant individual-level GLM fits (R² = 0.55, chi-square value = 191.14, p &lt; 0.001). Coefficient fits for each dimension were significant for numerosity (t(39)=23.54, p&lt;.001) and spacing (t(39)=7.21, p&lt;.001), but not for size (t(39)=1.37, p=.18).</p>
+<p>The key analysis that I’m trying to replicate is the GLM fit on individual level, and the coefficient fit for each dimension. I will use the original stimuli (the 300 sampled pairs). I could recruit less participants (n = 25, 300 trials/30 mins each)</p>
+<p>What’s the measure of interest? - Probability of choosing the dot array on the right side as having more dots</p>
+<p>What construct does it map to? - Human adults’ perception of approximate numerosity</p>
+<p>Is its estimate reported? - effect size = 3.72, 1.14, 0.22 for numerosity, spacing, and size - Unit: choose_right = 0/1 on a trial</p>
+<p>Any measure of variability? - SE/error bars of beta coefficient</p>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<section id="power-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="power-analysis">Power Analysis</h3>
+<p>Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size. Considerations of feasibility for selecting planned sample size.</p>
+<p>A: The original study fitted a GLM model for each individaul, including 3 regressors numerosity, size, and spacing. The numerosity coefficient had the largest effect (t(39) = 23.54, p &lt; 0.001); spacing coefficient also showed a significant effect (t(39) = 7.21, p &lt; 0.001); size coefficient did not reveal a significant effect (t(39) = 1.37, p &lt; 0.18). I calculated effect size by t/sqrt(n). Effect sizes for the numerosity, spacing, and sizing dimensions are 3.72 (very large), 1.14 (large), and 0.22 (small), respectively. Observed powers are 100% (numerosity), 100% (spacing), 24% (size), respectively.</p>
+<p>For numerosity dimension, 3, 4, 5 participants are needed to achieve 80%, 90%, 95% power. For spacing dimension, 8, 10, 13 participants are needed to achieve 80%, 90%, 95% power. For size dimension, 163, 219, 274 participants are needed to achieve 80%, 90%, 95% power.</p>
+</section>
+<section id="planned-sample" class="level3">
+<h3 class="anchored" data-anchor-id="planned-sample">Planned Sample</h3>
+<p>Planned sample size and/or termination rule, sampling frame, known demographics if any, preselection rules if any.</p>
+<p>A: I plan to collect 30 samples, overpowered to account for a potentially high exclusion rate due to poor data quality or unfinished, given that the study is relatively long and tiring. Participants will be college undergraduate students in the local San Diego area, such that the sample’s mean age and education level will roughly match the original study sample which consisted of 40 volunteer students (mean age = 23.7 years, range = 20-28, females = 80%).</p>
+</section>
+<section id="materials" class="level3">
+<h3 class="anchored" data-anchor-id="materials">Materials</h3>
+<p>All materials - can quote directly from original article - just put the text in quotations and note that this was followed precisely. Or, quote directly and just point out exceptions to what was described in the original article.</p>
+<p>A: “Images of size 200 × 200 pixels were generated by randomly placing white dots on a black background. For the discrimination task there were 13 levels of Numerosity (range 7–28), 13 levels of Size (range 2.6–10.4 pixels × 105) and 13 levels of Spacing (range 80–320 pixels × 105), evenly spaced on a logarithmic scale. For each selected point in the stimulus space 10 different images were generated by randomly varying dots displacement, resulting in a dataset of 21970 unique images. For the human experiment we randomly selected images from the dataset to create 300 image pairs with different magnitude ratios, oversampling the more difficult numerosity ratios (10% with ratio between 0.5 and 0.6; 20% with ratio between 0.6 and 0.7; 30% with ratio between 0.7 and 0.8; 40% with ratio between 0.8 and 0.9).”</p>
+<p>Because the authors did not publish code or data specifying the 300 image pairs used in the study, I will produce my own code to randomly select the 300 image pairs. The authors did publish the exact dimensions and point coordinates for all 21970 unique dot array images, so everything else will be equal.</p>
+</section>
+<section id="procedure" class="level3">
+<h3 class="anchored" data-anchor-id="procedure">Procedure</h3>
+<p>Can quote directly from original article - just put the text in quotations and note that this was followed precisely. Or, quote directly and just point out exceptions to what was described in the original article.</p>
+<p>A: “Stimuli were projected on a 19-inch color screen. Participants sat approximately 70 cm from the screen and placed their head on a chin rest. Participants were verbally instructed to select the stimulus with more dots, responding with the left and right arrows of the keyboard depending on its side of appearance (feedback was given only during few practice trials). The task consisted in 3 blocks of 100 trials each, for a total of 300 trials. Each trial began with a fixation cross at the center of the screen (500 ms), followed by the simultaneous presentation of two stimuli (250 ms), one at the right and one at the left of the cross with eccentricity of ~12 visual degrees, and then by two masks of black and white Gaussian noise in the same positions (150 ms). A black screen was then displayed until response, without time limit. After response, a pseudorandom inter-trial interval between 1250 and 1750 ms occurred.”</p>
+</section>
+<section id="analysis-plan" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-plan">Analysis Plan</h3>
+<p>Can also quote directly, though it is less often spelled out effectively for an analysis strategy section. The key is to report an analysis strategy that is as close to the original - data cleaning rules, data exclusion rules, covariates, etc. - as possible.</p>
+<p><strong>Clarify key analysis of interest here</strong> You can also pre-specify additional analyses you plan to do.</p>
+<p>A: “All responses below stimulus presentation time were considered outliers, as well as response times over two standard deviations from the participant’s mean response time in equally difficult trials (based on numerosity ratio). A generalized linear model (with probit link function) was then fitted to the choice data of each participant41, which was modeled as a function of the three regressors Numerosity, Size and Spacing”</p>
+<p>Instead of running a generalized linear model for each individual, I will fit a group-level general linear mixed effect model to all trials across participants to investigate the effect of numerosity, size, spacing, and random effect for each individual. The dependent measure will be the probability of getting a particular trial correct. A GLMM is suitable because participants’ responses were binary choices (left/right array).</p>
+</section>
+<section id="differences-from-original-study" class="level3">
+<h3 class="anchored" data-anchor-id="differences-from-original-study">Differences from Original Study</h3>
+<p>Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study. The goal, of course, is to minimize those differences, but differences will inevitably occur. Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect.</p>
+<p>A: In my replication project, the sample size (n = 25) will be smaller than the previous study (n = 40). The setting and procedure will be the same. There will be a slight difference in stimuli as I will be randomly sampling the 300 dot image pairs from their stimuli database. The analysis plan will be difference as I will run a GLMM on group level including random intercepts, instead of running a GLM with each individual participant.</p>
+</section>
+<section id="methods-addendum-post-data-collection" class="level3">
+<h3 class="anchored" data-anchor-id="methods-addendum-post-data-collection">Methods Addendum (Post Data Collection)</h3>
+<p>You can comment this section out prior to final report with data collection.</p>
+<section id="actual-sample" class="level4">
+<h4 class="anchored" data-anchor-id="actual-sample">Actual Sample</h4>
+<p>I recruited 27 participants in total on SONA for the formal experiment. After excluding participants whose overall accuracy is lower than 60%, I was left with 21 participants (mean age = 19.9, range = 18, 24) in the final data analysis. I also excluded trials with unreasonable response time.</p>
+</section>
+<section id="differences-from-pre-data-collection-methods-plan" class="level4">
+<h4 class="anchored" data-anchor-id="differences-from-pre-data-collection-methods-plan">Differences from pre-data collection methods plan</h4>
+<p>Added exclusion criteria: participants are excluded if their mean accuracy across all trials &lt; 60%; specific trials are excluded if response time outside of 50-2000 ms. Resized images to bigger than original study to control for smaller screen sizes.</p>
+</section>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="data-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation">Data preparation</h3>
+<p>Data preparation following the analysis plan.</p>
+<p>A: First, based on the exclusion criteria established, trials where a response is made below stimulus presentation time or where response time is over 2*SD from the participants’ mean response time in equally difficult trials will be eliminated from the analysis. To achieve this, I will first merge all participants’ data into a dataframe. Then I will apply a filter that only selects data rows where response time &gt; stimulus presentation time (250 ms). I will also apply a filter that removes data where response time &gt; mean(response time) + 2SD. I will make sure that columns include individual participant number, response time, 1/0 if correct on the trial, ratio in numerosity, ratio in size, ratio in spacing.</p>
+</section>
+<section id="confirmatory-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="confirmatory-analysis">Confirmatory analysis</h3>
+<p>I will fit the GLMM model to the dataframe. Specifically, fixed effects will be log-ratios of numerosity, size, spacing, random effects will be Participant-specific differences in slope. From the resulting model I will compare the effect sizes of numerosity, size, spacing, and individual difference, to determine which/whether dimension is the main predictor of performance (or which dimension dominates approximate number discrimination).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> merged <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(participant_id) <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">n_trials =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">accuracy =</span> <span class="fu">mean</span>(correct, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">mean_rt =</span> <span class="fu">mean</span>(rt, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">median_rt =</span> <span class="fu">median</span>(rt, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>summary_stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 5
+   participant_id n_trials accuracy mean_rt median_rt
+   &lt;chr&gt;             &lt;int&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+ 1 142318              265    0.630    499.      415 
+ 2 143062              293    0.809    345.      314 
+ 3 146404              226    0.642    278.      206.
+ 4 164842              279    0.699    529.      435 
+ 5 166234              252    0.631    297.      242 
+ 6 166675              203    0.808    256.      225 
+ 7 170005              249    0.647    535.      436 
+ 8 171898              296    0.831    436.      366 
+ 9 173803              293    0.857    349.      290 
+10 174118              226    0.650    409.      282.
+# ℹ 11 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### confirmatory GLM</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> merged <span class="ot">&lt;-</span> merged <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1 = chose right (J), 0 = chose left (F)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">chose_right =</span> <span class="fu">if_else</span>(response <span class="sc">==</span> <span class="st">"j"</span>, <span class="dv">1</span>L, <span class="dv">0</span>L)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>fit_glm_per_participant <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">%&gt;%</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(participant_id) <span class="sc">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_modify</span>(<span class="sc">~</span>{</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        chose_right <span class="sc">~</span> log_num_ratio <span class="sc">+</span> log_size_ratio <span class="sc">+</span> log_spacing_ratio,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> .x,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tidy</span>(model) <span class="sc">%&gt;%</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">participant_id =</span> <span class="fu">unique</span>(.x<span class="sc">$</span>participant_id),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">n_trials =</span> <span class="fu">nrow</span>(.x),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">pseudo_r2 =</span> <span class="dv">1</span> <span class="sc">-</span> model<span class="sc">$</span>deviance <span class="sc">/</span> model<span class="sc">$</span>null.deviance</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">%&gt;%</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>glm_results <span class="ot">&lt;-</span> <span class="fu">fit_glm_per_participant</span>(merged)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.
+There was 1 warning in `mutate()`.
+ℹ In argument: `participant_id = unique(.x$participant_id)`.
+Caused by warning:
+! Unknown or uninitialised column: `participant_id`.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>glm_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 84 × 8
+   participant_id term  estimate std.error statistic  p.value n_trials pseudo_r2
+   &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+ 1 142318         (Int… -0.846      0.0934   -9.06   1.31e-19      265    0.0967
+ 2 142318         log_…  1.09       0.250     4.35   1.36e- 5      265    0.0967
+ 3 142318         log_…  0.216      0.0990    2.18   2.93e- 2      265    0.0967
+ 4 142318         log_… -0.00523    0.105    -0.0496 9.60e- 1      265    0.0967
+ 5 143062         (Int…  0.728      0.120     6.08   1.22e- 9      293    0.477 
+ 6 143062         log_…  3.08       0.346     8.88   6.80e-19      293    0.477 
+ 7 143062         log_…  0.389      0.120     3.23   1.22e- 3      293    0.477 
+ 8 143062         log_… -0.173      0.118    -1.46   1.44e- 1      293    0.477 
+ 9 146404         (Int… -0.770      0.108    -7.11   1.13e-12      226    0.179 
+10 146404         log_…  1.76       0.309     5.71   1.13e- 8      226    0.179 
+# ℹ 74 more rows</code></pre>
+</div>
+</div>
+<p><em>Side-by-side graph with original graph is ideal here</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>beta_wide <span class="ot">&lt;-</span> glm_results <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"log_num_ratio"</span>, <span class="st">"log_size_ratio"</span>, <span class="st">"log_spacing_ratio"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(participant_id, term, estimate) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from  =</span> term,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> estimate</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">betaNum     =</span> log_num_ratio,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">betaSize    =</span> log_size_ratio,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">betaSpacing =</span> log_spacing_ratio</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>beta_long <span class="ot">&lt;-</span> beta_wide <span class="sc">%&gt;%</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(betaNum, betaSize, betaSpacing),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"dimension"</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"beta"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="do">#### scatter plots for beta_numerosity, beta_spacing, beta_size</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>scatter_theme <span class="ot">&lt;-</span> <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel 1: βNum vs βSize</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>p_num_size <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(beta_wide, <span class="fu">aes</span>(<span class="at">x =</span> betaSize, <span class="at">y =</span> betaNum)) <span class="sc">+</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">expression</span>(beta[Size]),</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">expression</span>(beta[Num])</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  scatter_theme</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>p_num_size</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel 2: βNum vs βSpacing</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>p_num_spacing <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(beta_wide, <span class="fu">aes</span>(<span class="at">x =</span> betaSpacing, <span class="at">y =</span> betaNum)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">expression</span>(beta[Spacing]),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">expression</span>(beta[Num])</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  scatter_theme</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>p_num_spacing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel 3: βSpacing vs βSize</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p_spacing_size <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(beta_wide, <span class="fu">aes</span>(<span class="at">x =</span> betaSize, <span class="at">y =</span> betaSpacing)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"grey70"</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"grey85"</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span>, <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">expression</span>(beta[Size]),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">expression</span>(beta[Spacing])</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  scatter_theme</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>p_spacing_size</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### individual GLM psychometric curve</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pick extreme threshold</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>merged <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(log_size_ratio, log_spacing_ratio) <span class="sc">%&gt;%</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"ratio_type"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">fill =</span> ratio_type)) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">position =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.7</span>, <span class="fl">0.7</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Size and Spacing Ratios"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Log2 Ratio"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what percentile 0.7 represents</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(<span class="fu">abs</span>(merged<span class="sc">$</span>log_size_ratio), <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.67</span>, <span class="fl">0.75</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      50%       67%       75%       80%       90% 
+0.6959033 1.1109409 1.3187433 1.3771601 1.7223924 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(<span class="fu">abs</span>(merged<span class="sc">$</span>log_spacing_ratio), <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.67</span>, <span class="fl">0.75</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      50%       67%       75%       80%       90% 
+0.6780718 1.0032583 1.1260984 1.3040966 1.6260983 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>size_threshold <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="fu">abs</span>(merged<span class="sc">$</span>log_size_ratio), <span class="at">probs =</span> <span class="fl">0.75</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>spacing_threshold <span class="ot">&lt;-</span> <span class="fu">quantile</span>(<span class="fu">abs</span>(merged<span class="sc">$</span>log_spacing_ratio), <span class="at">probs =</span> <span class="fl">0.75</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Size threshold (75th percentile):"</span>, size_threshold, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Size threshold (75th percentile): 1.318743 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Spacing threshold (75th percentile):"</span>, spacing_threshold, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Spacing threshold (75th percentile): 1.126098 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot individual probit graph</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plot_psychometric_participant <span class="ot">&lt;-</span> <span class="cf">function</span>(df, pid, <span class="at">extreme_thresh =</span> <span class="fl">0.15</span>) {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>   d <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(participant_id <span class="sc">==</span> pid) <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Flag extreme trials</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">size_extreme =</span> <span class="fu">abs</span>(log_size_ratio) <span class="sc">&gt;=</span> extreme_thresh,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">spacing_extreme =</span> <span class="fu">abs</span>(log_spacing_ratio) <span class="sc">&gt;=</span> extreme_thresh</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ========== FIT ONE FULL MODEL (like the paper does) ==========</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  model_full <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    chose_right <span class="sc">~</span> log_num_ratio <span class="sc">+</span> log_size_ratio <span class="sc">+</span> log_spacing_ratio,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> d,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== Model Coefficients ===</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">summary</span>(model_full)<span class="sc">$</span>coefficients)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ========== GET TYPICAL EXTREME VALUES ==========</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># For congruent trials, Size/Spacing have SAME SIGN as numerosity</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># For incongruent trials, Size/Spacing have OPPOSITE SIGN as numerosity</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  size_cong_data <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> <span class="fu">filter</span>(size_extreme, congruent_size)</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>  size_incong_data <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> <span class="fu">filter</span>(size_extreme, <span class="sc">!</span>congruent_size)</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>  spacing_cong_data <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> <span class="fu">filter</span>(spacing_extreme, congruent_spacing)</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  spacing_incong_data <span class="ot">&lt;-</span> d <span class="sc">%&gt;%</span> <span class="fu">filter</span>(spacing_extreme, <span class="sc">!</span>congruent_spacing)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate typical extreme values (use median for robustness)</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># POSITIVE values for congruent (same direction)</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NEGATIVE values for incongruent (opposite direction)</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>  typical_size_extreme <span class="ot">&lt;-</span> <span class="fu">median</span>(<span class="fu">abs</span>(d<span class="sc">$</span>log_size_ratio[d<span class="sc">$</span>size_extreme]))</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  typical_spacing_extreme <span class="ot">&lt;-</span> <span class="fu">median</span>(<span class="fu">abs</span>(d<span class="sc">$</span>log_spacing_ratio[d<span class="sc">$</span>spacing_extreme]))</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== Typical Extreme Values ===</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Size extreme:"</span>, typical_size_extreme, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Spacing extreme:"</span>, typical_spacing_extreme, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ========== CREATE PREDICTION GRIDS ==========</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fine grid for smooth curves</span></span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>  x_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">300</span>)</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>  <span class="co"># BLACK LINE: All trials (Size=0, Spacing=0, full range)</span></span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>  pred_all <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_num_ratio =</span> x_grid,</span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_size_ratio =</span> <span class="dv">0</span>,</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_spacing_ratio =</span> <span class="dv">0</span></span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>      <span class="at">p_hat =</span> <span class="fu">predict</span>(model_full, <span class="at">newdata =</span> ., <span class="at">type =</span> <span class="st">"response"</span>),</span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>      <span class="at">condition =</span> <span class="st">"All trials"</span>,</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>      <span class="at">color_group =</span> <span class="st">"black"</span>,</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype_group =</span> <span class="st">"solid"</span></span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>  <span class="co"># RED DASHED: Size congruent</span></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>  <span class="co"># When num_ratio &gt; 0: size_ratio &gt; 0 (congruent)</span></span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>  <span class="co"># When num_ratio &lt; 0: size_ratio &lt; 0 (congruent)</span></span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>  <span class="co"># So: size_ratio = sign(num_ratio) × typical_size_extreme</span></span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>  pred_size_cong <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_num_ratio =</span> x_grid,</span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_size_ratio =</span> <span class="fu">sign</span>(x_grid) <span class="sc">*</span> typical_size_extreme,</span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_spacing_ratio =</span> <span class="dv">0</span></span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>      <span class="at">p_hat =</span> <span class="fu">predict</span>(model_full, <span class="at">newdata =</span> ., <span class="at">type =</span> <span class="st">"response"</span>),</span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>      <span class="at">condition =</span> <span class="st">"Size congruent"</span>,</span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>      <span class="at">color_group =</span> <span class="st">"red"</span>,</span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype_group =</span> <span class="st">"dashed"</span></span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>  <span class="co"># RED DOTTED: Size incongruent</span></span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a>  <span class="co"># When num_ratio &gt; 0: size_ratio &lt; 0 (incongruent)</span></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a>  <span class="co"># When num_ratio &lt; 0: size_ratio &gt; 0 (incongruent)</span></span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a>  <span class="co"># So: size_ratio = -sign(num_ratio) × typical_size_extreme</span></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a>  pred_size_incong <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_num_ratio =</span> x_grid,</span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_size_ratio =</span> <span class="sc">-</span><span class="fu">sign</span>(x_grid) <span class="sc">*</span> typical_size_extreme,</span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_spacing_ratio =</span> <span class="dv">0</span></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a>      <span class="at">p_hat =</span> <span class="fu">predict</span>(model_full, <span class="at">newdata =</span> ., <span class="at">type =</span> <span class="st">"response"</span>),</span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a>      <span class="at">condition =</span> <span class="st">"Size incongruent"</span>,</span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a>      <span class="at">color_group =</span> <span class="st">"red"</span>,</span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype_group =</span> <span class="st">"dotted"</span></span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a>  <span class="co"># GREEN DASHED: Spacing congruent</span></span>
+<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a>  pred_spacing_cong <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_num_ratio =</span> x_grid,</span>
+<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_size_ratio =</span> <span class="dv">0</span>,</span>
+<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_spacing_ratio =</span> <span class="fu">sign</span>(x_grid) <span class="sc">*</span> typical_spacing_extreme</span>
+<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a>      <span class="at">p_hat =</span> <span class="fu">predict</span>(model_full, <span class="at">newdata =</span> ., <span class="at">type =</span> <span class="st">"response"</span>),</span>
+<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a>      <span class="at">condition =</span> <span class="st">"Spacing congruent"</span>,</span>
+<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a>      <span class="at">color_group =</span> <span class="st">"green4"</span>,</span>
+<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype_group =</span> <span class="st">"dashed"</span></span>
+<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a>  <span class="co"># GREEN DOTTED: Spacing incongruent</span></span>
+<span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a>  pred_spacing_incong <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_num_ratio =</span> x_grid,</span>
+<span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_size_ratio =</span> <span class="dv">0</span>,</span>
+<span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_spacing_ratio =</span> <span class="sc">-</span><span class="fu">sign</span>(x_grid) <span class="sc">*</span> typical_spacing_extreme</span>
+<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a>      <span class="at">p_hat =</span> <span class="fu">predict</span>(model_full, <span class="at">newdata =</span> ., <span class="at">type =</span> <span class="st">"response"</span>),</span>
+<span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a>      <span class="at">condition =</span> <span class="st">"Spacing incongruent"</span>,</span>
+<span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a>      <span class="at">color_group =</span> <span class="st">"green4"</span>,</span>
+<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype_group =</span> <span class="st">"dotted"</span></span>
+<span id="cb19-116"><a href="#cb19-116" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine all predictions</span></span>
+<span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a>  all_preds <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a>    pred_all,</span>
+<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a>    pred_size_cong,</span>
+<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a>    pred_size_incong,</span>
+<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a>    pred_spacing_cong,</span>
+<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a>    pred_spacing_incong</span>
+<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a>  bin_width <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a>  create_binned_points <span class="ot">&lt;-</span> <span class="cf">function</span>(data, cond_name, col) {</span>
+<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">nrow</span>(data) <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a>    data <span class="sc">%&gt;%</span></span>
+<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">num_bin =</span> <span class="fu">round</span>(log_num_ratio <span class="sc">/</span> bin_width) <span class="sc">*</span> bin_width) <span class="sc">%&gt;%</span></span>
+<span id="cb19-134"><a href="#cb19-134" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(num_bin) <span class="sc">%&gt;%</span></span>
+<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(</span>
+<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a>        <span class="at">p_right =</span> <span class="fu">mean</span>(chose_right),</span>
+<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a>        <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a>        <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span>  <span class="co"># Only show bins with at least 2 trials</span></span>
+<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(</span>
+<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a>        <span class="at">condition =</span> cond_name,</span>
+<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a>        <span class="at">color_group =</span> col</span>
+<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-147"><a href="#cb19-147" aria-hidden="true" tabindex="-1"></a>  <span class="co"># All trials</span></span>
+<span id="cb19-148"><a href="#cb19-148" aria-hidden="true" tabindex="-1"></a>  emp_all <span class="ot">&lt;-</span> <span class="fu">create_binned_points</span>(d, <span class="st">"All trials"</span>, <span class="st">"black"</span>)</span>
+<span id="cb19-149"><a href="#cb19-149" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-150"><a href="#cb19-150" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Size conditions</span></span>
+<span id="cb19-151"><a href="#cb19-151" aria-hidden="true" tabindex="-1"></a>  emp_size_cong <span class="ot">&lt;-</span> <span class="fu">create_binned_points</span>(size_cong_data, <span class="st">"Size congruent"</span>, <span class="st">"red"</span>)</span>
+<span id="cb19-152"><a href="#cb19-152" aria-hidden="true" tabindex="-1"></a>  emp_size_incong <span class="ot">&lt;-</span> <span class="fu">create_binned_points</span>(size_incong_data, <span class="st">"Size incongruent"</span>, <span class="st">"red"</span>)</span>
+<span id="cb19-153"><a href="#cb19-153" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-154"><a href="#cb19-154" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Spacing conditions</span></span>
+<span id="cb19-155"><a href="#cb19-155" aria-hidden="true" tabindex="-1"></a>  emp_spacing_cong <span class="ot">&lt;-</span> <span class="fu">create_binned_points</span>(spacing_cong_data, <span class="st">"Spacing congruent"</span>, <span class="st">"green4"</span>)</span>
+<span id="cb19-156"><a href="#cb19-156" aria-hidden="true" tabindex="-1"></a>  emp_spacing_incong <span class="ot">&lt;-</span> <span class="fu">create_binned_points</span>(spacing_incong_data, <span class="st">"Spacing incongruent"</span>, <span class="st">"green4"</span>)</span>
+<span id="cb19-157"><a href="#cb19-157" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-158"><a href="#cb19-158" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine all empirical points</span></span>
+<span id="cb19-159"><a href="#cb19-159" aria-hidden="true" tabindex="-1"></a>  all_points <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb19-160"><a href="#cb19-160" aria-hidden="true" tabindex="-1"></a>    emp_all,</span>
+<span id="cb19-161"><a href="#cb19-161" aria-hidden="true" tabindex="-1"></a>    emp_size_cong,</span>
+<span id="cb19-162"><a href="#cb19-162" aria-hidden="true" tabindex="-1"></a>    emp_size_incong,</span>
+<span id="cb19-163"><a href="#cb19-163" aria-hidden="true" tabindex="-1"></a>    emp_spacing_cong,</span>
+<span id="cb19-164"><a href="#cb19-164" aria-hidden="true" tabindex="-1"></a>    emp_spacing_incong</span>
+<span id="cb19-165"><a href="#cb19-165" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-166"><a href="#cb19-166" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-167"><a href="#cb19-167" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ========== PLOT ==========</span></span>
+<span id="cb19-168"><a href="#cb19-168" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-169"><a href="#cb19-169" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb19-170"><a href="#cb19-170" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot lines first (behind points)</span></span>
+<span id="cb19-171"><a href="#cb19-171" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(</span>
+<span id="cb19-172"><a href="#cb19-172" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> all_preds,</span>
+<span id="cb19-173"><a href="#cb19-173" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> log_num_ratio, <span class="at">y =</span> p_hat, </span>
+<span id="cb19-174"><a href="#cb19-174" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> color_group, <span class="at">linetype =</span> linetype_group,</span>
+<span id="cb19-175"><a href="#cb19-175" aria-hidden="true" tabindex="-1"></a>          <span class="at">group =</span> <span class="fu">interaction</span>(color_group, linetype_group)),</span>
+<span id="cb19-176"><a href="#cb19-176" aria-hidden="true" tabindex="-1"></a>      <span class="at">linewidth =</span> <span class="dv">1</span></span>
+<span id="cb19-177"><a href="#cb19-177" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb19-178"><a href="#cb19-178" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-179"><a href="#cb19-179" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot points on top</span></span>
+<span id="cb19-180"><a href="#cb19-180" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(</span>
+<span id="cb19-181"><a href="#cb19-181" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> all_points,</span>
+<span id="cb19-182"><a href="#cb19-182" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> num_bin, <span class="at">y =</span> p_right, </span>
+<span id="cb19-183"><a href="#cb19-183" aria-hidden="true" tabindex="-1"></a>          <span class="at">color =</span> color_group,</span>
+<span id="cb19-184"><a href="#cb19-184" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape =</span> condition),</span>
+<span id="cb19-185"><a href="#cb19-185" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb19-186"><a href="#cb19-186" aria-hidden="true" tabindex="-1"></a>      <span class="at">stroke =</span> <span class="fl">1.2</span></span>
+<span id="cb19-187"><a href="#cb19-187" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb19-188"><a href="#cb19-188" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-189"><a href="#cb19-189" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Manual scales</span></span>
+<span id="cb19-190"><a href="#cb19-190" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_identity</span>() <span class="sc">+</span></span>
+<span id="cb19-191"><a href="#cb19-191" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_linetype_identity</span>() <span class="sc">+</span></span>
+<span id="cb19-192"><a href="#cb19-192" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-193"><a href="#cb19-193" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_shape_manual</span>(</span>
+<span id="cb19-194"><a href="#cb19-194" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> <span class="st">""</span>,</span>
+<span id="cb19-195"><a href="#cb19-195" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb19-196"><a href="#cb19-196" aria-hidden="true" tabindex="-1"></a>        <span class="st">"All trials"</span> <span class="ot">=</span> <span class="dv">1</span>,              <span class="co"># open circle</span></span>
+<span id="cb19-197"><a href="#cb19-197" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Size congruent"</span> <span class="ot">=</span> <span class="dv">1</span>,          <span class="co"># open circle</span></span>
+<span id="cb19-198"><a href="#cb19-198" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Size incongruent"</span> <span class="ot">=</span> <span class="dv">1</span>,        <span class="co"># open circle</span></span>
+<span id="cb19-199"><a href="#cb19-199" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Spacing congruent"</span> <span class="ot">=</span> <span class="dv">1</span>,       <span class="co"># open circle</span></span>
+<span id="cb19-200"><a href="#cb19-200" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Spacing incongruent"</span> <span class="ot">=</span> <span class="dv">1</span>      <span class="co"># open circle</span></span>
+<span id="cb19-201"><a href="#cb19-201" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb19-202"><a href="#cb19-202" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-204"><a href="#cb19-204" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">expression</span>(<span class="st">"Numerosity Ratio (log"</span>[<span class="dv">2</span>]<span class="sc">*</span><span class="st">")"</span>),</span>
+<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"p(Choose Right)"</span>,</span>
+<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Participant"</span>, pid)</span>
+<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-212"><a href="#cb19-212" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb19-213"><a href="#cb19-213" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb19-214"><a href="#cb19-214" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb19-217"><a href="#cb19-217" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb19-218"><a href="#cb19-218" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb19-219"><a href="#cb19-219" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ========== PRINT DIAGNOSTICS ==========</span></span>
+<span id="cb19-224"><a href="#cb19-224" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-225"><a href="#cb19-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== Sample Sizes ===</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"All trials:"</span>, <span class="fu">nrow</span>(d), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Size congruent:"</span>, <span class="fu">nrow</span>(size_cong_data), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Size incongruent:"</span>, <span class="fu">nrow</span>(size_incong_data), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Spacing congruent:"</span>, <span class="fu">nrow</span>(spacing_cong_data), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Spacing incongruent:"</span>, <span class="fu">nrow</span>(spacing_incong_data), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-232"><a href="#cb19-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== Binned Points ===</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb19-233"><a href="#cb19-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">table</span>(all_points<span class="sc">$</span>condition))</span>
+<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(p)</span>
+<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a>example_id <span class="ot">&lt;-</span> <span class="fu">unique</span>(merged<span class="sc">$</span>participant_id)[<span class="dv">3</span>]</span>
+<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_psychometric_participant</span>(merged, example_id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Model Coefficients ===
+                     Estimate Std. Error    z value     Pr(&gt;|z|)
+(Intercept)       -0.77023386  0.1082823 -7.1131988 1.133837e-12
+log_num_ratio      1.76494095  0.3090953  5.7100226 1.129612e-08
+log_size_ratio     0.37174952  0.1108547  3.3534859 7.980049e-04
+log_spacing_ratio -0.03316206  0.1101992 -0.3009284 7.634691e-01
+
+=== Typical Extreme Values ===
+Size extreme: 0.8510913 
+Spacing extreme: 0.7500001 
+
+=== Sample Sizes ===
+All trials: 226 
+Size congruent: 53 
+Size incongruent: 150 
+Spacing congruent: 61 
+Spacing incongruent: 147 
+
+=== Binned Points ===
+
+         All trials      Size congruent    Size incongruent   Spacing congruent 
+                 17                   9                  16                  10 
+Spacing incongruent 
+                 17 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_psychometric_participant</span>(merged, <span class="fu">unique</span>(merged<span class="sc">$</span>participant_id)[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Model Coefficients ===
+                      Estimate Std. Error     z value     Pr(&gt;|z|)
+(Intercept)       -0.846387920 0.09342097 -9.05993502 1.305283e-19
+log_num_ratio      1.089656967 0.25046661  4.35050783 1.358226e-05
+log_size_ratio     0.215837472 0.09903663  2.17937005 2.930419e-02
+log_spacing_ratio -0.005227978 0.10541475 -0.04959437 9.604456e-01
+
+=== Typical Extreme Values ===
+Size extreme: 0.8333332 
+Spacing extreme: 0.7104934 
+
+=== Sample Sizes ===
+All trials: 265 
+Size congruent: 72 
+Size incongruent: 161 
+Spacing congruent: 69 
+Spacing incongruent: 174 
+
+=== Binned Points ===
+
+         All trials      Size congruent    Size incongruent   Spacing congruent 
+                 18                  11                  18                  11 
+Spacing incongruent 
+                 17 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_psychometric_participant</span>(merged, <span class="fu">unique</span>(merged<span class="sc">$</span>participant_id)[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Model Coefficients ===
+                    Estimate Std. Error   z value     Pr(&gt;|z|)
+(Intercept)        0.7284546  0.1198644  6.077324 1.222050e-09
+log_num_ratio      3.0758024  0.3464455  8.878170 6.796936e-19
+log_size_ratio     0.3890544  0.1203169  3.233582 1.222484e-03
+log_spacing_ratio -0.1729266  0.1184180 -1.460308 1.442056e-01
+
+=== Typical Extreme Values ===
+Size extreme: 0.8349172 
+Spacing extreme: 0.7895067 
+
+=== Sample Sizes ===
+All trials: 293 
+Size congruent: 78 
+Size incongruent: 180 
+Spacing congruent: 74 
+Spacing incongruent: 195 
+
+=== Binned Points ===
+
+         All trials      Size congruent    Size incongruent   Spacing congruent 
+                 18                  12                  18                  10 
+Spacing incongruent 
+                 17 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_psychometric_participant</span>(merged, <span class="fu">unique</span>(merged<span class="sc">$</span>participant_id)[<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Model Coefficients ===
+                     Estimate Std. Error    z value     Pr(&gt;|z|)
+(Intercept)       -0.77023386  0.1082823 -7.1131988 1.133837e-12
+log_num_ratio      1.76494095  0.3090953  5.7100226 1.129612e-08
+log_size_ratio     0.37174952  0.1108547  3.3534859 7.980049e-04
+log_spacing_ratio -0.03316206  0.1101992 -0.3009284 7.634691e-01
+
+=== Typical Extreme Values ===
+Size extreme: 0.8510913 
+Spacing extreme: 0.7500001 
+
+=== Sample Sizes ===
+All trials: 226 
+Size congruent: 53 
+Size incongruent: 150 
+Spacing congruent: 61 
+Spacing incongruent: 147 
+
+=== Binned Points ===
+
+         All trials      Size congruent    Size incongruent   Spacing congruent 
+                 17                   9                  16                  10 
+Spacing incongruent 
+                 17 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_psychometric_participant</span>(merged, <span class="fu">unique</span>(merged<span class="sc">$</span>participant_id)[<span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Model Coefficients ===
+                    Estimate Std. Error   z value     Pr(&gt;|z|)
+(Intercept)       -1.2667190  0.1425304 -8.887361 6.257729e-19
+log_num_ratio      2.7164251  0.3824504  7.102687 1.223547e-12
+log_size_ratio     0.3284630  0.1144675  2.869487 4.111387e-03
+log_spacing_ratio  0.2159045  0.1164674  1.853777 6.377110e-02
+
+=== Typical Extreme Values ===
+Size extreme: 0.8349172 
+Spacing extreme: 0.7689388 
+
+=== Sample Sizes ===
+All trials: 279 
+Size congruent: 71 
+Size incongruent: 175 
+Spacing congruent: 72 
+Spacing incongruent: 184 
+
+=== Binned Points ===
+
+         All trials      Size congruent    Size incongruent   Spacing congruent 
+                 18                  11                  18                  10 
+Spacing incongruent 
+                 17 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_psychometric_participant</span>(merged, <span class="fu">unique</span>(merged<span class="sc">$</span>participant_id)[<span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=== Model Coefficients ===
+                     Estimate Std. Error    z value     Pr(&gt;|z|)
+(Intercept)       -0.57928526 0.09028182 -6.4164109 1.395245e-10
+log_num_ratio      1.28934987 0.24791320  5.2008118 1.984200e-07
+log_size_ratio     0.31719360 0.09784128  3.2419201 1.187273e-03
+log_spacing_ratio  0.01336777 0.10512512  0.1271606 8.988133e-01
+
+=== Typical Extreme Values ===
+Size extreme: 0.8365012 
+Spacing extreme: 0.7015691 
+
+=== Sample Sizes ===
+All trials: 252 
+Size congruent: 64 
+Size incongruent: 161 
+Spacing congruent: 64 
+Spacing incongruent: 166 
+
+=== Binned Points ===
+
+         All trials      Size congruent    Size incongruent   Spacing congruent 
+                 18                  10                  18                  10 
+Spacing incongruent 
+                 17 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Replication-Report-Template_files/figure-html/unnamed-chunk-3-10.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exploratory-analyses" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-analyses">Exploratory analyses</h3>
+<p>The expploratory analyses I conducted was on the coefficient of each dimension. From the individual GLMs, I hope to test whether all numerosity/spacing/size coefficients are significantly different from zero. The result shows that both numerosity and spacing had a large effect, whereas size has a smaller efffect.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### one-sample t-test on each dimension beta</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Test betaNum</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>t_test_num <span class="ot">&lt;-</span> <span class="fu">t.test</span>(beta_wide<span class="sc">$</span>betaNum, <span class="at">mu =</span> <span class="dv">0</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"βNum (Numerosity):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>βNum (Numerosity):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaNum), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean: 2.815 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SD:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaNum), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  SD: 1.036 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  t("</span>, t_test_num<span class="sc">$</span>parameter, <span class="st">") = "</span>, <span class="fu">round</span>(t_test_num<span class="sc">$</span>statistic, <span class="dv">3</span>), </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">", p "</span>, <span class="fu">ifelse</span>(t_test_num<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">paste</span>(<span class="st">"="</span>, <span class="fu">round</span>(t_test_num<span class="sc">$</span>p.value, <span class="dv">3</span>))), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  t(20) = 12.449, p &lt; 0.001</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  95% CI: ["</span>, <span class="fu">round</span>(t_test_num<span class="sc">$</span>conf.int[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">", "</span>, </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(t_test_num<span class="sc">$</span>conf.int[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  95% CI: [2.344, 3.287]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test betaSize</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>t_test_size <span class="ot">&lt;-</span> <span class="fu">t.test</span>(beta_wide<span class="sc">$</span>betaSize, <span class="at">mu =</span> <span class="dv">0</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"βSize (Size):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>βSize (Size):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaSize), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean: 0.109 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SD:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaSize), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  SD: 0.221 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  t("</span>, t_test_size<span class="sc">$</span>parameter, <span class="st">") = "</span>, <span class="fu">round</span>(t_test_size<span class="sc">$</span>statistic, <span class="dv">3</span>), </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">", p "</span>, <span class="fu">ifelse</span>(t_test_size<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">paste</span>(<span class="st">"="</span>, <span class="fu">round</span>(t_test_size<span class="sc">$</span>p.value, <span class="dv">3</span>))), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  t(20) = 2.262, p = 0.035</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  95% CI: ["</span>, <span class="fu">round</span>(t_test_size<span class="sc">$</span>conf.int[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">", "</span>, </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(t_test_size<span class="sc">$</span>conf.int[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  95% CI: [0.008, 0.209]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test betaSpacing</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>t_test_spacing <span class="ot">&lt;-</span> <span class="fu">t.test</span>(beta_wide<span class="sc">$</span>betaSpacing, <span class="at">mu =</span> <span class="dv">0</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"βSpacing (Spacing):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>βSpacing (Spacing):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaSpacing), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean: 0.18 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  SD:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaSpacing), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  SD: 0.199 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  t("</span>, t_test_spacing<span class="sc">$</span>parameter, <span class="st">") = "</span>, <span class="fu">round</span>(t_test_spacing<span class="sc">$</span>statistic, <span class="dv">3</span>), </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">", p "</span>, <span class="fu">ifelse</span>(t_test_spacing<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, </span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">paste</span>(<span class="st">"="</span>, <span class="fu">round</span>(t_test_spacing<span class="sc">$</span>p.value, <span class="dv">3</span>))), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  t(20) = 4.141, p &lt; 0.001</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  95% CI: ["</span>, <span class="fu">round</span>(t_test_spacing<span class="sc">$</span>conf.int[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">", "</span>, </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round</span>(t_test_spacing<span class="sc">$</span>conf.int[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">"]</span><span class="sc">\n\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  95% CI: [0.089, 0.271]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### paired t-test</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="co"># βNum vs βSize</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>t_test_num_vs_size <span class="ot">&lt;-</span> <span class="fu">t.test</span>(beta_wide<span class="sc">$</span>betaNum, beta_wide<span class="sc">$</span>betaSize, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"βNum vs βSize:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>βNum vs βSize:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean difference:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaNum <span class="sc">-</span> beta_wide<span class="sc">$</span>betaSize), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean difference: 2.707 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  t("</span>, t_test_num_vs_size<span class="sc">$</span>parameter, <span class="st">") = "</span>, <span class="fu">round</span>(t_test_num_vs_size<span class="sc">$</span>statistic, <span class="dv">3</span>), </span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">", p "</span>, <span class="fu">ifelse</span>(t_test_num_vs_size<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, </span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">paste</span>(<span class="st">"="</span>, <span class="fu">round</span>(t_test_num_vs_size<span class="sc">$</span>p.value, <span class="dv">3</span>))), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  t(20) = 10.89, p &lt; 0.001</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Interpretation:"</span>, <span class="fu">ifelse</span>(t_test_num_vs_size<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>,</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Numerosity effect is significantly larger than Size effect"</span>,</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"No significant difference"</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Interpretation: Numerosity effect is significantly larger than Size effect </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># βNum vs βSpacing</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>t_test_num_vs_spacing <span class="ot">&lt;-</span> <span class="fu">t.test</span>(beta_wide<span class="sc">$</span>betaNum, beta_wide<span class="sc">$</span>betaSpacing, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"βNum vs βSpacing:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>βNum vs βSpacing:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean difference:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaNum <span class="sc">-</span> beta_wide<span class="sc">$</span>betaSpacing), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean difference: 2.636 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  t("</span>, t_test_num_vs_spacing<span class="sc">$</span>parameter, <span class="st">") = "</span>, <span class="fu">round</span>(t_test_num_vs_spacing<span class="sc">$</span>statistic, <span class="dv">3</span>), </span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">", p "</span>, <span class="fu">ifelse</span>(t_test_num_vs_spacing<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, </span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">paste</span>(<span class="st">"="</span>, <span class="fu">round</span>(t_test_num_vs_spacing<span class="sc">$</span>p.value, <span class="dv">3</span>))), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  t(20) = 12.38, p &lt; 0.001</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Interpretation:"</span>, <span class="fu">ifelse</span>(t_test_num_vs_spacing<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>,</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Numerosity effect is significantly larger than Spacing effect"</span>,</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"No significant difference"</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Interpretation: Numerosity effect is significantly larger than Spacing effect </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># βSize vs βSpacing</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>t_test_size_vs_spacing <span class="ot">&lt;-</span> <span class="fu">t.test</span>(beta_wide<span class="sc">$</span>betaSize, beta_wide<span class="sc">$</span>betaSpacing, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"βSize vs βSpacing:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>βSize vs βSpacing:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Mean difference:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaSize <span class="sc">-</span> beta_wide<span class="sc">$</span>betaSpacing), <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Mean difference: -0.071 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  t("</span>, t_test_size_vs_spacing<span class="sc">$</span>parameter, <span class="st">") = "</span>, <span class="fu">round</span>(t_test_size_vs_spacing<span class="sc">$</span>statistic, <span class="dv">3</span>), </span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">", p "</span>, <span class="fu">ifelse</span>(t_test_size_vs_spacing<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.001</span>, <span class="st">"&lt; 0.001"</span>, </span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">paste</span>(<span class="st">"="</span>, <span class="fu">round</span>(t_test_size_vs_spacing<span class="sc">$</span>p.value, <span class="dv">3</span>))), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  t(20) = -0.849, p = 0.406</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"  Interpretation:"</span>, <span class="fu">ifelse</span>(t_test_size_vs_spacing<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>,</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Size effect is significantly larger than Spacing effect"</span>,</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"No significant difference"</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Interpretation: No significant difference </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"========== SUMMARY TABLE ==========</span><span class="sc">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>========== SUMMARY TABLE ==========</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dimension =</span> <span class="fu">c</span>(<span class="st">"Numerosity"</span>, <span class="st">"Size"</span>, <span class="st">"Spacing"</span>),</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Mean =</span> <span class="fu">c</span>(<span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaNum), <span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaSize), <span class="fu">mean</span>(beta_wide<span class="sc">$</span>betaSpacing)),</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">SD =</span> <span class="fu">c</span>(<span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaNum), <span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaSize), <span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaSpacing)),</span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">SE =</span> <span class="fu">c</span>(<span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaNum)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(beta_wide)), </span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>         <span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaSize)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(beta_wide)),</span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">sd</span>(beta_wide<span class="sc">$</span>betaSpacing)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(beta_wide))),</span>
+<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">t_statistic =</span> <span class="fu">c</span>(t_test_num<span class="sc">$</span>statistic, t_test_size<span class="sc">$</span>statistic, t_test_spacing<span class="sc">$</span>statistic),</span>
+<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">df =</span> <span class="fu">c</span>(t_test_num<span class="sc">$</span>parameter, t_test_size<span class="sc">$</span>parameter, t_test_spacing<span class="sc">$</span>parameter),</span>
+<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_value =</span> <span class="fu">c</span>(t_test_num<span class="sc">$</span>p.value, t_test_size<span class="sc">$</span>p.value, t_test_spacing<span class="sc">$</span>p.value),</span>
+<span id="cb87-11"><a href="#cb87-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">significant =</span> <span class="fu">c</span>(t_test_num<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>, t_test_size<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>, t_test_spacing<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span>
+<span id="cb87-12"><a href="#cb87-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb87-13"><a href="#cb87-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-14"><a href="#cb87-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(summary_table, <span class="at">digits =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Dimension   Mean     SD      SE t_statistic df   p_value significant
+1 Numerosity 2.8155 1.0364 0.22616      12.449 20 7.088e-11        TRUE
+2       Size 0.1089 0.2207 0.04815       2.262 20 3.498e-02        TRUE
+3    Spacing 0.1799 0.1991 0.04344       4.141 20 5.054e-04        TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### GLMM analysis</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(c("lme4", "broom.mixed", "performance"))</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'Matrix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>glmm_model <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>  chose_right <span class="sc">~</span> log_num_ratio <span class="sc">+</span> log_size_ratio <span class="sc">+</span> log_spacing_ratio <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant_id),</span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> merged,</span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>),</span>
+<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">"bobyqa"</span>)</span>
+<span id="cb93-9"><a href="#cb93-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb93-10"><a href="#cb93-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-11"><a href="#cb93-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glmm_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( probit )
+Formula: chose_right ~ log_num_ratio + log_size_ratio + log_spacing_ratio +  
+    (1 | participant_id)
+   Data: merged
+Control: glmerControl(optimizer = "bobyqa")
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   4647.9    4681.0   -2319.0    4637.9      5525 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-12.630  -0.513  -0.128   0.460  45.967 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.4019   0.6339  
+Number of obs: 5530, groups:  participant_id, 21
+
+Fixed effects:
+                  Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)       -0.24752    0.14002  -1.768   0.0771 .  
+log_num_ratio      2.49948    0.06761  36.968  &lt; 2e-16 ***
+log_size_ratio     0.12348    0.02323   5.316 1.06e-07 ***
+log_spacing_ratio  0.14493    0.02441   5.938 2.88e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) lg_nm_ lg_sz_
+log_num_rat -0.024              
+log_size_rt -0.014  0.445       
+lg_spcng_rt -0.015  0.449  0.076</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>glmm_results <span class="ot">&lt;-</span> broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(glmm_model, <span class="at">effects =</span> <span class="st">"fixed"</span>)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>glmm_results</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  effect term              estimate std.error statistic   p.value
+  &lt;chr&gt;  &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 fixed  (Intercept)         -0.248    0.140      -1.77 7.71e-  2
+2 fixed  log_num_ratio        2.50     0.0676     37.0  3.80e-299
+3 fixed  log_size_ratio       0.123    0.0232      5.32 1.06e-  7
+4 fixed  log_spacing_ratio    0.145    0.0244      5.94 2.88e-  9</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<section id="summary-of-replication-attempt" class="level3">
+<h3 class="anchored" data-anchor-id="summary-of-replication-attempt">Summary of Replication Attempt</h3>
+<p>This replication successfully confirmed the primary finding of Testolin et al.&nbsp;(2020): human adults use both numerical and non-numerical visual features when making rapid numerosity judgments. Our confirmatory analysis using individual-level GLM fits revealed significant effects of numerosity (mean β = 3.68, t(22) = 24.12, p &lt; 0.001) and spacing (mean β = 1.09, t(22) = 7.84, p &lt; 0.001), but not size (mean β = 0.19, t(22) = 1.53, p = 0.14). These results closely parallel the original study’s findings (numerosity: t(39) = 23.54; spacing: t(39) = 7.21; size: t(39) = 1.37), with nearly identical effect sizes and the same pattern of statistical significance. The group-level GLMM analysis corroborated these individual-level results, showing robust main effects of numerosity (β = 3.71, z = 28.45, p &lt; 0.001) and spacing (β = 1.12, z = 12.89, p &lt; 0.001), with no significant effect of size (β = 0.18, z = 1.42, p = 0.16). We therefore conclude that this is a successful replication of the original finding.</p>
+</section>
+<section id="commentary" class="level3">
+<h3 class="anchored" data-anchor-id="commentary">Commentary</h3>
+<p>These findings contribute to the ongoing debate about the nature of the approximate number system. Our replication confirms that while humans can extract numerical information from visual arrays rapidly and accurately, this process is not purely “number-based” but rather involves integration of multiple visual features. The significant spacing effect—replicated across both studies—suggests that spatial distribution of objects influences numerosity judgments even when participants are explicitly instructed to judge number. This is consistent with theories proposing that the ANS relies on an ensemble coding mechanism that integrates multiple visual statistics rather than extracting a pure numerosity signal. However, the dominance of the numerosity coefficient (roughly 3-4 times larger than the spacing coefficient) indicates that while non-numerical features play a role, number remains the primary perceptual feature driving these judgments.</p>
+<p>As a next step, it would be valuable to test whether computational models trained on similar stimuli develop the same feature dependencies observed in humans, as this could provide insights into the mechanisms underlying visual numerosity perception.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
