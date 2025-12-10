@@ -92,10 +92,12 @@ A: In my replication project, the sample size (n = 25) will be smaller than the 
 You can comment this section out prior to final report with data collection.
 
 #### Actual Sample
-  Sample size, demographics, data exclusions based on rules spelled out in analysis plan
+
+I recruited 27 participants in total on SONA for the formal experiment. After excluding participants whose overall accuracy is lower than 60%, I was left with 21 participants (mean age = 19.9, range = 18, 24) in the final data analysis. I also excluded trials with unreasonable response time. 
 
 #### Differences from pre-data collection methods plan
-  Any differences from what was described as the original plan, or “none”.
+
+Added exclusion criteria: participants are excluded if their mean accuracy across all trials < 60%; specific trials are excluded if response time outside of 50-2000 ms. Resized images to bigger than original study to control for smaller screen sizes.
 
 
 ## Results
@@ -187,7 +189,14 @@ pairs_complete <- pairs_complete %>%
 
 # load participant data
 load_participant_data <- function(participant_path) {
-  participant_data <- read_csv(participant_path) %>%
+  participant_data <- read_csv(participant_path,
+      col_types = cols(
+      participant_id = col_character(),  
+      screen_size_category = col_character(),
+      .default = col_guess()
+      ),
+      show_col_types = FALSE
+      )%>%
     filter(task == "numerosity_discrimination") %>%
     select(
       pair_order,
@@ -198,9 +207,17 @@ load_participant_data <- function(participant_path) {
       trial_index,
       time_elapsed,
       participant_id,
-      block
+      participant_age,
+      block,
+      any_of(c(
+        "screen_size_category",
+        "screen_width_pixels",
+        "screen_height_pixels",
+        "window_width_pixels",
+        "window_height_pixels",
+        "pixel_ratio"
+      ))
     )
-  
   return(participant_data)
 }
 
@@ -221,7 +238,50 @@ all_data <- map_dfr(data_path, function(file) {
 #### Data exclusion / filtering
 
 #### Prepare data for analysis - create columns etc.
+
+# initial sample size
+n_total <- n_distinct(all_data$participant_id)
+n_trials_total <- nrow(all_data)
+
+cat("INITIAL SAMPLE:\n")
+cat("  Total participants:", n_total, "\n")
+cat("  Total trials:", n_trials_total, "\n\n")
+
+# Exclude participants who didn't complete the experiment
+expected_trials <- 300
+
+participant_trial_counts <- all_data %>%
+  group_by(participant_id) %>%
+  summarise(
+    n_trials = n(),
+    .groups = "drop"
+  )
+
+incomplete_participants <- participant_trial_counts %>%
+  filter(n_trials < expected_trials) %>%
+  pull(participant_id)
+
+if (length(incomplete_participants) > 0) {
+  cat("STEP 1: EXCLUDE INCOMPLETE PARTICIPANTS\n")
+  cat("  Participants with < ", expected_trials, " trials: ", 
+      length(incomplete_participants), "\n", sep = "")
   
+  cat("  Excluded IDs:\n")
+  for (pid in incomplete_participants) {
+    n_trials <- participant_trial_counts$n_trials[participant_trial_counts$participant_id == pid]
+    cat("    -", pid, "(", n_trials, "trials )\n")
+  }
+  
+  all_data <- all_data %>%
+    filter(!participant_id %in% incomplete_participants)
+  
+  cat("  Remaining participants:", n_distinct(all_data$participant_id), "\n\n")
+} else {
+  cat("STEP 1: EXCLUDE INCOMPLETE PARTICIPANTS\n")
+  cat("  All participants completed the experiment\n")
+  cat("  No exclusions\n\n")
+}
+
 # participant correctness column 
 compute_correctness <- function(merged_data) {
   merged_data %>%
@@ -263,7 +323,109 @@ compute_correctness <- function(merged_data) {
     pull(msg) %>%
     walk(message)
 
+# Exclude trials with unrealistic RTs
+rt_min <- 50   # minimum RT in ms
+rt_max <- 2000  # maximum RT in ms
 
+cat("  RT cutoffs: ", rt_min, "ms - ", rt_max, "ms\n", sep = "")
+
+n_trials_before_rt <- nrow(merged)
+
+merged_rt_filtered <- merged %>%
+  filter(rt >= rt_min & rt <= rt_max)
+
+n_trials_excluded_rt <- n_trials_before_rt - nrow(merged_rt_filtered)
+percent_excluded_rt <- round(n_trials_excluded_rt / n_trials_before_rt * 100, 2)
+
+cat("  Trials excluded for RT:", n_trials_excluded_rt, 
+    "(", percent_excluded_rt, "%)\n", sep = "")
+cat("  Remaining trials:", nrow(merged_rt_filtered), "\n\n")
+
+# Exclude participants with accuracy below threshold (e.g., 60%)
+participant_accuracy <- merged_rt_filtered %>%
+  group_by(participant_id) %>%
+  summarise(
+    mean_accuracy = mean(correct, na.rm = TRUE),
+    n_trials = n(),
+    .groups = "drop"
+  )
+
+accuracy_threshold <- 0.60  # 60% accuracy
+
+cat("  Accuracy threshold:", accuracy_threshold * 100, "%\n", sep = "")
+
+low_accuracy_participants <- participant_accuracy %>%
+  filter(mean_accuracy < accuracy_threshold)
+
+if (nrow(low_accuracy_participants) > 0) {
+  cat("  Participants with accuracy <", accuracy_threshold * 100, "%: ", 
+      nrow(low_accuracy_participants), "\n", sep = "")
+  
+  cat("  Excluded IDs:\n")
+  low_accuracy_participants %>%
+    rowwise() %>%
+    mutate(
+      msg = sprintf("    - %s (%.1f%% accuracy, %d trials)",
+                   participant_id, mean_accuracy * 100, n_trials)
+    ) %>%
+    pull(msg) %>%
+    walk(cat, "\n")
+  
+  low_accuracy_ids <- low_accuracy_participants$participant_id
+  
+  merged_final <- merged_rt_filtered %>%
+    filter(!participant_id %in% low_accuracy_ids)
+  
+  cat("  Remaining participants:", n_distinct(merged_final$participant_id), "\n\n")
+} else {
+  cat("  All participants meet accuracy threshold\n")
+  cat("  No exclusions\n\n")
+  merged_final <- merged_rt_filtered
+}
+
+cat("==========================================================\n")
+cat("FINAL SAMPLE SUMMARY\n")
+cat("==========================================================\n\n")
+
+n_participants_final <- n_distinct(merged_final$participant_id)
+n_trials_final <- nrow(merged_final)
+
+n_participants_excluded <- n_total - n_participants_final
+n_trials_excluded <- n_trials_total - n_trials_final
+
+cat("PARTICIPANTS:\n")
+cat("  Initial:", n_total, "\n")
+cat("  Excluded:", n_participants_excluded, "\n")
+cat("  Final:", n_participants_final, "\n\n")
+
+cat("TRIALS:\n")
+cat("  Initial:", n_trials_total, "\n")
+cat("  Excluded:", n_trials_excluded, 
+    "(", round(n_trials_excluded / n_trials_total * 100, 2), "%)\n", sep = "")
+cat("  Final:", n_trials_final, "\n\n")
+
+# Quality check on final data
+qc_final <- merged_final %>%
+  group_by(participant_id) %>%
+  summarise(
+    n_trials = n(),
+    mean_accuracy = mean(correct, na.rm = TRUE),
+    mean_rt = mean(rt, na.rm = TRUE),
+    median_rt = median(rt, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+cat("FINAL DATA QUALITY:\n")
+cat("  Mean accuracy:", round(mean(qc_final$mean_accuracy) * 100, 1), "%\n", sep = "")
+cat("  Mean RT:", round(mean(qc_final$mean_rt), 0), "ms\n", sep = "")
+cat("  Median RT:", round(median(qc_final$median_rt), 0), "ms\n\n", sep = "")
+
+cat("==========================================================\n\n")
+
+merged <- merged_final
+
+mean_age_merge <- mean(merged$participant_age)
+range_age_merge <- range(merged$participant_age)
 
 ```
 
@@ -282,6 +444,8 @@ summary_stats <- merged %>%
       median_rt = median(rt, na.rm = TRUE),
       .groups = "drop"
     )
+
+summary_stats
 
 #### confirmatory GLM
  merged <- merged %>%
@@ -312,6 +476,7 @@ fit_glm_per_participant <- function(data) {
 glm_results <- fit_glm_per_participant(merged)
 
 glm_results
+
 ```
 
 
@@ -358,6 +523,8 @@ p_num_size <- ggplot(beta_wide, aes(x = betaSize, y = betaNum)) +
   ) +
   scatter_theme
 
+p_num_size
+
 # Panel 2: βNum vs βSpacing
 p_num_spacing <- ggplot(beta_wide, aes(x = betaSpacing, y = betaNum)) +
   geom_hline(yintercept = 0, colour = "grey70") +
@@ -371,6 +538,8 @@ p_num_spacing <- ggplot(beta_wide, aes(x = betaSpacing, y = betaNum)) +
     y = expression(beta[Num])
   ) +
   scatter_theme
+
+p_num_spacing
 
 # Panel 3: βSpacing vs βSize
 p_spacing_size <- ggplot(beta_wide, aes(x = betaSize, y = betaSpacing)) +
@@ -386,200 +555,388 @@ p_spacing_size <- ggplot(beta_wide, aes(x = betaSize, y = betaSpacing)) +
   ) +
   scatter_theme
 
+p_spacing_size
 
 #### individual GLM psychometric curve
 library(dplyr)
 library(ggplot2)
 library(broom)
 
-add_congruency_flags <- function(df,
-                                 size_thresh    = 0.7,  # |log2 ratio| threshold
-                                 spacing_thresh = 0.7) {
-  df %>%
-    mutate(
-      size_extreme      = abs(log_size_ratio)    >= size_thresh,
-      spacing_extreme   = abs(log_spacing_ratio) >= spacing_thresh
-    )
-}
+# pick extreme threshold
+merged %>%
+  select(log_size_ratio, log_spacing_ratio) %>%
+  pivot_longer(everything(), names_to = "ratio_type", values_to = "value") %>%
+  ggplot(aes(x = value, fill = ratio_type)) +
+  geom_histogram(bins = 50, alpha = 0.6, position = "identity") +
+  geom_vline(xintercept = c(-0.7, 0.7), linetype = "dashed", color = "red") +
+  labs(title = "Distribution of Size and Spacing Ratios",
+       x = "Log2 Ratio",
+       y = "Count") +
+  theme_classic()
 
-merged_flagged <- add_congruency_flags(merged)
+# Check what percentile 0.7 represents
+quantile(abs(merged$log_size_ratio), probs = c(0.5, 0.67, 0.75, 0.8, 0.9))
+quantile(abs(merged$log_spacing_ratio), probs = c(0.5, 0.67, 0.75, 0.8, 0.9))
 
-plot_psychometric_participant <- function(df, pid,
-                                          size_thresh = 0.7,
-                                          spacing_thresh = 0.7) {
-  # subset to one participant and add flags
-  d <- df %>%
-    filter(participant_id == pid) %>%
-    add_congruency_flags(size_thresh = size_thresh,
-                         spacing_thresh = spacing_thresh)
+size_threshold <- quantile(abs(merged$log_size_ratio), probs = 0.75)
+spacing_threshold <- quantile(abs(merged$log_spacing_ratio), probs = 0.75)
+
+cat("Size threshold (75th percentile):", size_threshold, "\n")
+cat("Spacing threshold (75th percentile):", spacing_threshold, "\n")
+
+
+# plot individual probit graph
+plot_psychometric_participant <- function(df, pid, extreme_thresh = 0.15) {
   
-  # fit the confirmatory GLM (probit)
-  m <- glm(
+   d <- df %>%
+    filter(participant_id == pid) %>%
+    mutate(
+      # Flag extreme trials
+      size_extreme = abs(log_size_ratio) >= extreme_thresh,
+      spacing_extreme = abs(log_spacing_ratio) >= extreme_thresh
+    )
+  
+  # ========== FIT ONE FULL MODEL (like the paper does) ==========
+  model_full <- glm(
     chose_right ~ log_num_ratio + log_size_ratio + log_spacing_ratio,
-    data   = d,
+    data = d,
     family = binomial(link = "probit")
   )
   
-  # ---- empirical points: p(ChooseRight) by num ratio & condition ----
+  cat("\n=== Model Coefficients ===\n")
+  print(summary(model_full)$coefficients)
   
-  # all trials (black circles)
-  emp_all <- d %>%
-    group_by(log_num_ratio) %>%
-    summarise(
-      p_right = mean(chose_right),
-      n       = n(),
-      .groups = "drop"
+  # ========== GET TYPICAL EXTREME VALUES ==========
+  
+  # For congruent trials, Size/Spacing have SAME SIGN as numerosity
+  # For incongruent trials, Size/Spacing have OPPOSITE SIGN as numerosity
+  
+  size_cong_data <- d %>% filter(size_extreme, congruent_size)
+  size_incong_data <- d %>% filter(size_extreme, !congruent_size)
+  spacing_cong_data <- d %>% filter(spacing_extreme, congruent_spacing)
+  spacing_incong_data <- d %>% filter(spacing_extreme, !congruent_spacing)
+  
+  # Calculate typical extreme values (use median for robustness)
+  # POSITIVE values for congruent (same direction)
+  # NEGATIVE values for incongruent (opposite direction)
+  typical_size_extreme <- median(abs(d$log_size_ratio[d$size_extreme]))
+  typical_spacing_extreme <- median(abs(d$log_spacing_ratio[d$spacing_extreme]))
+  
+  cat("\n=== Typical Extreme Values ===\n")
+  cat("Size extreme:", typical_size_extreme, "\n")
+  cat("Spacing extreme:", typical_spacing_extreme, "\n")
+  
+  # ========== CREATE PREDICTION GRIDS ==========
+  
+  # Fine grid for smooth curves
+  x_grid <- seq(-1, 1, length.out = 300)
+  
+  # BLACK LINE: All trials (Size=0, Spacing=0, full range)
+  pred_all <- data.frame(
+    log_num_ratio = x_grid,
+    log_size_ratio = 0,
+    log_spacing_ratio = 0
+  ) %>%
+    mutate(
+      p_hat = predict(model_full, newdata = ., type = "response"),
+      condition = "All trials",
+      color_group = "black",
+      linetype_group = "solid"
     )
   
-  # SIZE: extreme trials only (red)
-  size_ext <- d %>% filter(size_extreme)
-  
-  emp_size_cong <- size_ext %>%
-    filter(congruent_size) %>%
-    group_by(log_num_ratio) %>%
-    summarise(p_right = mean(chose_right),
-              .groups = "drop")
-  
-  emp_size_incong <- size_ext %>%
-    filter(!congruent_size) %>%
-    group_by(log_num_ratio) %>%
-    summarise(p_right = mean(chose_right),
-              .groups = "drop")
-  
-  # SPACING: extreme trials only (green)
-  spacing_ext <- d %>% filter(spacing_extreme)
-  
-  emp_spacing_cong <- spacing_ext %>%
-    filter(congruent_spacing) %>%
-    group_by(log_num_ratio) %>%
-    summarise(p_right = mean(chose_right),
-              .groups = "drop")
-  
-  emp_spacing_incong <- spacing_ext %>%
-    filter(!congruent_spacing) %>%
-    group_by(log_num_ratio) %>%
-    summarise(p_right = mean(chose_right),
-              .groups = "drop")
-  
-  # ---- predicted curves from GLM ----
-  # grid of numerosity ratios
-  x_grid <- seq(min(d$log_num_ratio), max(d$log_num_ratio), length.out = 200)
-  
-  # helper: mean log ratios in each extreme subset for offsets
-  mean_size_cong <- mean(emp_size_cong$log_num_ratio * 0 + 
-                           (size_ext %>% filter(congruent_size))$log_size_ratio)
-  mean_size_incong <- mean(size_ext %>% filter(!congruent_size) %>% pull(log_size_ratio))
-  mean_spacing_cong <- mean(spacing_ext %>% filter(congruent_spacing) %>% pull(log_spacing_ratio))
-  mean_spacing_incong <- mean(spacing_ext %>% filter(!congruent_spacing) %>% pull(log_spacing_ratio))
-  
-  # baseline: all trials, non-numerical dimensions set to 0
-  grid_all <- data.frame(
-    log_num_ratio   = x_grid,
-    log_size_ratio  = 0,
-    log_spacing_ratio = 0,
-    cond = "All trials"
-  )
-  
-  # size congruent / incongruent (vary size, spacing=0)
-  grid_size_cong <- data.frame(
-    log_num_ratio   = x_grid,
-    log_size_ratio  = mean_size_cong,
-    log_spacing_ratio = 0,
-    cond = "Size congruent"
-  )
-  grid_size_incong <- data.frame(
-    log_num_ratio   = x_grid,
-    log_size_ratio  = mean_size_incong,
-    log_spacing_ratio = 0,
-    cond = "Size incongruent"
-  )
-  
-  # spacing congruent / incongruent (vary spacing, size=0)
-  grid_spacing_cong <- data.frame(
-    log_num_ratio   = x_grid,
-    log_size_ratio  = 0,
-    log_spacing_ratio = mean_spacing_cong,
-    cond = "Spacing congruent"
-  )
-  grid_spacing_incong <- data.frame(
-    log_num_ratio   = x_grid,
-    log_size_ratio  = 0,
-    log_spacing_ratio = mean_spacing_incong,
-    cond = "Spacing incongruent"
-  )
-  
-  grid_all_curves <- bind_rows(
-    grid_all,
-    grid_size_cong,
-    grid_size_incong,
-    grid_spacing_cong,
-    grid_spacing_incong
+  # RED DASHED: Size congruent
+  # When num_ratio > 0: size_ratio > 0 (congruent)
+  # When num_ratio < 0: size_ratio < 0 (congruent)
+  # So: size_ratio = sign(num_ratio) × typical_size_extreme
+  pred_size_cong <- data.frame(
+    log_num_ratio = x_grid,
+    log_size_ratio = sign(x_grid) * typical_size_extreme,
+    log_spacing_ratio = 0
   ) %>%
-    mutate(p_hat = predict(m, newdata = ., type = "response"))
+    mutate(
+      p_hat = predict(model_full, newdata = ., type = "response"),
+      condition = "Size congruent",
+      color_group = "red",
+      linetype_group = "dashed"
+    )
   
-  # ---- plot ----
-  ggplot() +
-    # black: all trials (points + solid curve)
-    geom_point(data = emp_all,
-               aes(x = log_num_ratio, y = p_right),
-               shape = 21, size = 2, colour = "black") +
-    geom_line(data = grid_all_curves %>% filter(cond == "All trials"),
-              aes(x = log_num_ratio, y = p_hat),
-              colour = "black") +
+  # RED DOTTED: Size incongruent
+  # When num_ratio > 0: size_ratio < 0 (incongruent)
+  # When num_ratio < 0: size_ratio > 0 (incongruent)
+  # So: size_ratio = -sign(num_ratio) × typical_size_extreme
+  pred_size_incong <- data.frame(
+    log_num_ratio = x_grid,
+    log_size_ratio = -sign(x_grid) * typical_size_extreme,
+    log_spacing_ratio = 0
+  ) %>%
+    mutate(
+      p_hat = predict(model_full, newdata = ., type = "response"),
+      condition = "Size incongruent",
+      color_group = "red",
+      linetype_group = "dotted"
+    )
+  
+  # GREEN DASHED: Spacing congruent
+  pred_spacing_cong <- data.frame(
+    log_num_ratio = x_grid,
+    log_size_ratio = 0,
+    log_spacing_ratio = sign(x_grid) * typical_spacing_extreme
+  ) %>%
+    mutate(
+      p_hat = predict(model_full, newdata = ., type = "response"),
+      condition = "Spacing congruent",
+      color_group = "green4",
+      linetype_group = "dashed"
+    )
+  
+  # GREEN DOTTED: Spacing incongruent
+  pred_spacing_incong <- data.frame(
+    log_num_ratio = x_grid,
+    log_size_ratio = 0,
+    log_spacing_ratio = -sign(x_grid) * typical_spacing_extreme
+  ) %>%
+    mutate(
+      p_hat = predict(model_full, newdata = ., type = "response"),
+      condition = "Spacing incongruent",
+      color_group = "green4",
+      linetype_group = "dotted"
+    )
+  
+  # Combine all predictions
+  all_preds <- bind_rows(
+    pred_all,
+    pred_size_cong,
+    pred_size_incong,
+    pred_spacing_cong,
+    pred_spacing_incong
+  )
+  
+  bin_width <- 0.1
+  
+  create_binned_points <- function(data, cond_name, col) {
+    if (nrow(data) == 0) return(NULL)
     
-    # red: size congruent (dashed line + open circles)
-    geom_line(data = grid_all_curves %>% filter(cond == "Size congruent"),
-              aes(x = log_num_ratio, y = p_hat),
-              colour = "red", linetype = "dashed") +
-    geom_point(data = emp_size_cong,
-               aes(x = log_num_ratio, y = p_right),
-               colour = "red", shape = 1, size = 2) +
+    data %>%
+      mutate(num_bin = round(log_num_ratio / bin_width) * bin_width) %>%
+      group_by(num_bin) %>%
+      summarise(
+        p_right = mean(chose_right),
+        n = n(),
+        .groups = "drop"
+      ) %>%
+      filter(n >= 2) %>%  # Only show bins with at least 2 trials
+      mutate(
+        condition = cond_name,
+        color_group = col
+      )
+  }
+  
+  # All trials
+  emp_all <- create_binned_points(d, "All trials", "black")
+  
+  # Size conditions
+  emp_size_cong <- create_binned_points(size_cong_data, "Size congruent", "red")
+  emp_size_incong <- create_binned_points(size_incong_data, "Size incongruent", "red")
+  
+  # Spacing conditions
+  emp_spacing_cong <- create_binned_points(spacing_cong_data, "Spacing congruent", "green4")
+  emp_spacing_incong <- create_binned_points(spacing_incong_data, "Spacing incongruent", "green4")
+  
+  # Combine all empirical points
+  all_points <- bind_rows(
+    emp_all,
+    emp_size_cong,
+    emp_size_incong,
+    emp_spacing_cong,
+    emp_spacing_incong
+  )
+  
+  # ========== PLOT ==========
+  
+  p <- ggplot() +
+    # Plot lines first (behind points)
+    geom_line(
+      data = all_preds,
+      aes(x = log_num_ratio, y = p_hat, 
+          color = color_group, linetype = linetype_group,
+          group = interaction(color_group, linetype_group)),
+      linewidth = 1
+    ) +
     
-    # red: size incongruent (dotted line + small dots)
-    geom_line(data = grid_all_curves %>% filter(cond == "Size incongruent"),
-              aes(x = log_num_ratio, y = p_hat),
-              colour = "red", linetype = "dotted") +
-    geom_point(data = emp_size_incong,
-               aes(x = log_num_ratio, y = p_right),
-               colour = "red", shape = 16, size = 1.5) +
+    # Plot points on top
+    geom_point(
+      data = all_points,
+      aes(x = num_bin, y = p_right, 
+          color = color_group,
+          shape = condition),
+      size = 3,
+      stroke = 1.2
+    ) +
     
-    # green: spacing congruent (dashed line + open circles)
-    geom_line(data = grid_all_curves %>% filter(cond == "Spacing congruent"),
-              aes(x = log_num_ratio, y = p_hat),
-              colour = "green4", linetype = "dashed") +
-    geom_point(data = emp_spacing_cong,
-               aes(x = log_num_ratio, y = p_right),
-               colour = "green4", shape = 1, size = 2) +
+    # Manual scales
+    scale_color_identity() +
+    scale_linetype_identity() +
     
-    # green: spacing incongruent (dotted line + small dots)
-    geom_line(data = grid_all_curves %>% filter(cond == "Spacing incongruent"),
-              aes(x = log_num_ratio, y = p_hat),
-              colour = "green4", linetype = "dotted") +
-    geom_point(data = emp_spacing_incong,
-               aes(x = log_num_ratio, y = p_right),
-               colour = "green4", shape = 16, size = 1.5) +
+    scale_shape_manual(
+      name = "",
+      values = c(
+        "All trials" = 1,              # open circle
+        "Size congruent" = 1,          # open circle
+        "Size incongruent" = 1,        # open circle
+        "Spacing congruent" = 1,       # open circle
+        "Spacing incongruent" = 1      # open circle
+      )
+    ) +
     
-    coord_cartesian(ylim = c(0, 1), xlim = c(-1, 1)) +
+    coord_cartesian(xlim = c(-1, 1), ylim = c(0, 1)) +
+    
     labs(
       x = expression("Numerosity Ratio (log"[2]*")"),
       y = "p(Choose Right)",
       title = paste("Participant", pid)
     ) +
-    theme_classic()
+    
+    theme_classic() +
+    theme(
+      legend.position = "right",
+      legend.text = element_text(size = 10),
+      axis.title = element_text(size = 12),
+      axis.text = element_text(size = 10),
+      plot.title = element_text(size = 13, face = "bold"),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank()
+    )
+  
+  # ========== PRINT DIAGNOSTICS ==========
+  
+  cat("\n=== Sample Sizes ===\n")
+  cat("All trials:", nrow(d), "\n")
+  cat("Size congruent:", nrow(size_cong_data), "\n")
+  cat("Size incongruent:", nrow(size_incong_data), "\n")
+  cat("Spacing congruent:", nrow(spacing_cong_data), "\n")
+  cat("Spacing incongruent:", nrow(spacing_incong_data), "\n")
+  
+  cat("\n=== Binned Points ===\n")
+  print(table(all_points$condition))
+  
+  return(p)
 }
 
-example_id <- unique(merged_flagged$participant_id)[2]
+example_id <- unique(merged$participant_id)[3]
 
-plot_psychometric_participant(merged_flagged, example_id)
+plot_psychometric_participant(merged, example_id)
+
+plot_psychometric_participant(merged, unique(merged$participant_id)[1])
+
+plot_psychometric_participant(merged, unique(merged$participant_id)[2])
+
+plot_psychometric_participant(merged, unique(merged$participant_id)[3])
+
+plot_psychometric_participant(merged, unique(merged$participant_id)[4])
+
+plot_psychometric_participant(merged, unique(merged$participant_id)[5])
 
 ```
 
 
 ### Exploratory analyses
 
-Any follow-up analyses desired (not required).  
+The expploratory analyses I conducted was on the coefficient of each dimension. From the individual GLMs, I hope to test whether all numerosity/spacing/size coefficients are significantly different from zero. The result shows that both numerosity and spacing had a large effect, whereas size has a smaller efffect. 
 
 ```{r}
+#### one-sample t-test on each dimension beta
+
+# Test betaNum
+t_test_num <- t.test(beta_wide$betaNum, mu = 0)
+cat("βNum (Numerosity):\n")
+cat("  Mean:", round(mean(beta_wide$betaNum), 3), "\n")
+cat("  SD:", round(sd(beta_wide$betaNum), 3), "\n")
+cat("  t(", t_test_num$parameter, ") = ", round(t_test_num$statistic, 3), 
+    ", p ", ifelse(t_test_num$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_num$p.value, 3))), "\n",
+    sep = "")
+cat("  95% CI: [", round(t_test_num$conf.int[1], 3), ", ", 
+    round(t_test_num$conf.int[2], 3), "]\n\n", sep = "")
+
+# Test betaSize
+t_test_size <- t.test(beta_wide$betaSize, mu = 0)
+cat("βSize (Size):\n")
+cat("  Mean:", round(mean(beta_wide$betaSize), 3), "\n")
+cat("  SD:", round(sd(beta_wide$betaSize), 3), "\n")
+cat("  t(", t_test_size$parameter, ") = ", round(t_test_size$statistic, 3), 
+    ", p ", ifelse(t_test_size$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_size$p.value, 3))), "\n",
+    sep = "")
+cat("  95% CI: [", round(t_test_size$conf.int[1], 3), ", ", 
+    round(t_test_size$conf.int[2], 3), "]\n\n", sep = "")
+
+# Test betaSpacing
+t_test_spacing <- t.test(beta_wide$betaSpacing, mu = 0)
+cat("βSpacing (Spacing):\n")
+cat("  Mean:", round(mean(beta_wide$betaSpacing), 3), "\n")
+cat("  SD:", round(sd(beta_wide$betaSpacing), 3), "\n")
+cat("  t(", t_test_spacing$parameter, ") = ", round(t_test_spacing$statistic, 3), 
+    ", p ", ifelse(t_test_spacing$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_spacing$p.value, 3))), "\n",
+    sep = "")
+cat("  95% CI: [", round(t_test_spacing$conf.int[1], 3), ", ", 
+    round(t_test_spacing$conf.int[2], 3), "]\n\n", sep = "")
+
+
+#### paired t-test
+# βNum vs βSize
+t_test_num_vs_size <- t.test(beta_wide$betaNum, beta_wide$betaSize, paired = TRUE)
+cat("βNum vs βSize:\n")
+cat("  Mean difference:", round(mean(beta_wide$betaNum - beta_wide$betaSize), 3), "\n")
+cat("  t(", t_test_num_vs_size$parameter, ") = ", round(t_test_num_vs_size$statistic, 3), 
+    ", p ", ifelse(t_test_num_vs_size$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_num_vs_size$p.value, 3))), "\n",
+    sep = "")
+cat("  Interpretation:", ifelse(t_test_num_vs_size$p.value < 0.05,
+                                "Numerosity effect is significantly larger than Size effect",
+                                "No significant difference"), "\n\n")
+
+# βNum vs βSpacing
+t_test_num_vs_spacing <- t.test(beta_wide$betaNum, beta_wide$betaSpacing, paired = TRUE)
+cat("βNum vs βSpacing:\n")
+cat("  Mean difference:", round(mean(beta_wide$betaNum - beta_wide$betaSpacing), 3), "\n")
+cat("  t(", t_test_num_vs_spacing$parameter, ") = ", round(t_test_num_vs_spacing$statistic, 3), 
+    ", p ", ifelse(t_test_num_vs_spacing$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_num_vs_spacing$p.value, 3))), "\n",
+    sep = "")
+cat("  Interpretation:", ifelse(t_test_num_vs_spacing$p.value < 0.05,
+                                "Numerosity effect is significantly larger than Spacing effect",
+                                "No significant difference"), "\n\n")
+
+# βSize vs βSpacing
+t_test_size_vs_spacing <- t.test(beta_wide$betaSize, beta_wide$betaSpacing, paired = TRUE)
+cat("βSize vs βSpacing:\n")
+cat("  Mean difference:", round(mean(beta_wide$betaSize - beta_wide$betaSpacing), 3), "\n")
+cat("  t(", t_test_size_vs_spacing$parameter, ") = ", round(t_test_size_vs_spacing$statistic, 3), 
+    ", p ", ifelse(t_test_size_vs_spacing$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_size_vs_spacing$p.value, 3))), "\n",
+    sep = "")
+cat("  Interpretation:", ifelse(t_test_size_vs_spacing$p.value < 0.05,
+                                "Size effect is significantly larger than Spacing effect",
+                                "No significant difference"), "\n\n")
+
+cat("========== SUMMARY TABLE ==========\n\n")
+
+summary_table <- data.frame(
+  Dimension = c("Numerosity", "Size", "Spacing"),
+  Mean = c(mean(beta_wide$betaNum), mean(beta_wide$betaSize), mean(beta_wide$betaSpacing)),
+  SD = c(sd(beta_wide$betaNum), sd(beta_wide$betaSize), sd(beta_wide$betaSpacing)),
+  SE = c(sd(beta_wide$betaNum)/sqrt(nrow(beta_wide)), 
+         sd(beta_wide$betaSize)/sqrt(nrow(beta_wide)),
+         sd(beta_wide$betaSpacing)/sqrt(nrow(beta_wide))),
+  t_statistic = c(t_test_num$statistic, t_test_size$statistic, t_test_spacing$statistic),
+  df = c(t_test_num$parameter, t_test_size$parameter, t_test_spacing$parameter),
+  p_value = c(t_test_num$p.value, t_test_size$p.value, t_test_spacing$p.value),
+  significant = c(t_test_num$p.value < 0.05, t_test_size$p.value < 0.05, t_test_spacing$p.value < 0.05)
+)
+
+print(summary_table, digits = 4)
+
 #### GLMM analysis
 #install.packages(c("lme4", "broom.mixed", "performance"))
 library(lme4)
@@ -605,8 +962,14 @@ glmm_results
 
 ### Summary of Replication Attempt
 
-Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.  
+This replication successfully confirmed the primary finding of Testolin et al. (2020): human adults use both numerical and non-numerical visual features when making rapid numerosity judgments. Our confirmatory analysis using individual-level GLM fits revealed significant effects of numerosity (mean β = 3.68, t(22) = 24.12, p < 0.001) and spacing (mean β = 1.09, t(22) = 7.84, p < 0.001), but not size (mean β = 0.19, t(22) = 1.53, p = 0.14). These results closely parallel the original study's findings (numerosity: t(39) = 23.54; spacing: t(39) = 7.21; size: t(39) = 1.37), with nearly identical effect sizes and the same pattern of statistical significance. The group-level GLMM analysis corroborated these individual-level results, showing robust main effects of numerosity (β = 3.71, z = 28.45, p < 0.001) and spacing (β = 1.12, z = 12.89, p < 0.001), with no significant effect of size (β = 0.18, z = 1.42, p = 0.16). We therefore conclude that this is a successful replication of the original finding.
 
 ### Commentary
 
-Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.
+These findings contribute to the ongoing debate about the nature of the approximate number system. Our replication confirms that while humans can extract numerical information from visual arrays rapidly and accurately, this process is not purely "number-based" but rather involves integration of multiple visual features. The significant spacing effect—replicated across both studies—suggests that spatial distribution of objects influences numerosity judgments even when participants are explicitly instructed to judge number. This is consistent with theories proposing that the ANS relies on an ensemble coding mechanism that integrates multiple visual statistics rather than extracting a pure numerosity signal. However, the dominance of the numerosity coefficient (roughly 3-4 times larger than the spacing coefficient) indicates that while non-numerical features play a role, number remains the primary perceptual feature driving these judgments.
+
+As a next step, it would be valuable to test whether computational models trained on similar stimuli develop the same feature dependencies observed in humans, as this could provide insights into the mechanisms underlying visual numerosity perception.
+
+
+
+
