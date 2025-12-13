@@ -77,15 +77,15 @@ Can also quote directly, though it is less often spelled out effectively for an 
 
 **Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do.
 
-A: "All responses below stimulus presentation time were considered outliers, as well as response times over two standard deviations from the participant’s mean response time in equally difficult trials (based on numerosity ratio). A generalized linear model (with probit link function) was then fitted to the choice data of each  participant41, which was modeled as a function of the three regressors Numerosity, Size and Spacing" 
+A: "A generalized linear model (with probit link function) was then fitted to the choice data of each  participant41, which was modeled as a function of the three regressors Numerosity, Size and Spacing" 
 
-Instead of running a generalized linear model for each individual, I will fit a group-level general linear mixed effect model to all trials across participants to investigate the effect of numerosity, size, spacing, and random effect for each individual. The dependent measure will be the probability of getting a particular trial correct. A GLMM is suitable because participants' responses were binary choices (left/right array). 
+Following this procedure in the original paper, I will run a generalized linear model for each individual. The GLM model predicts the probability of choosing the image on the right from log ratio of numerosity, log ratio of spacing, and log ratio of size. The dependent measure is probability of choosing right image because the correct choice positions are randomized. Then I will run a t-test on all the coefficients of the individual GLM models. As exploratory analysis, I will fit a group-level general linear mixed effect model to all trials across participants to investigate the effect of numerosity, size, spacing, and random effect. The dependent measure will be the probability of choosing the image on the right. A GLM/GLMM is suitable because participants' responses were binary choices (left/right). 
 
 ### Differences from Original Study
 
 Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study.  The goal, of course, is to minimize those differences, but differences will inevitably occur.  Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect.
 
-A: In my replication project, the sample size (n = 25) will be smaller than the previous study (n = 40). The setting and procedure will be the same. There will be a slight difference in stimuli as I will be randomly sampling the 300 dot image pairs from their stimuli database. The analysis plan will be difference as I will run a GLMM on group level including random intercepts, instead of running a GLM with each individual participant. 
+A: In my replication project, the sample size (n = 30) will be smaller than the previous study (n = 40). The setting and procedure will be the same. There will be a slight difference in stimuli as I will be re-sampling the 300 dot image pairs from their stimuli database. The images were upsized because the current study uses smaller screens (13-14 inch) compared to the original study (19 inch). 
 
 ### Methods Addendum (Post Data Collection)
 
@@ -93,11 +93,11 @@ You can comment this section out prior to final report with data collection.
 
 #### Actual Sample
 
-I recruited 27 participants in total on SONA for the formal experiment. After excluding participants whose overall accuracy is lower than 60%, I was left with 21 participants (mean age = 19.9, range = 18, 24) in the final data analysis. I also excluded trials with unreasonable response time. 
+I recruited 27 participants on SONA for the formal experiment. After excluding participants whose overall accuracy is lower than 60%, I was left with 21 participants (mean age = 19.9, range = 18, 24) in the final data analysis. 
 
 #### Differences from pre-data collection methods plan
 
-Added exclusion criteria: participants are excluded if their mean accuracy across all trials < 60%; specific trials are excluded if response time outside of 50-2000 ms. Resized images to bigger than original study to control for smaller screen sizes.
+Added exclusion criteria: I added exclusion criteria because when I looked at the data, I found out that some participants had extremely low accuracy rate or unreasonable response time, which are signs that they are not paying attention. Therefore participants are excluded from final analysis if their mean accuracy across all trials < 60%; specific trials are excluded if response time is outside of 50-2000 ms. 
 
 
 ## Results
@@ -431,7 +431,7 @@ range_age_merge <- range(merged$participant_age)
 
 ### Confirmatory analysis
 
-I will fit the GLMM model to the dataframe. Specifically, fixed effects will be log-ratios of numerosity, size, spacing, random effects will be Participant-specific differences in slope. From the resulting model I will compare the effect sizes of numerosity, size, spacing, and individual difference, to determine which/whether dimension is the main predictor of performance (or which dimension dominates approximate number discrimination).  
+I will fit the GLM model to each individual. Specifically, fixed effects will be log-ratios of numerosity, size, spacing. From the resulting model I will then run t-test to compare the effect sizes of numerosity, size, spacing, to determine which/whether dimension is the main predictor of performance (or which dimension dominates approximate number discrimination).  
 
 ```{r}
 
@@ -476,6 +476,45 @@ fit_glm_per_participant <- function(data) {
 glm_results <- fit_glm_per_participant(merged)
 
 glm_results
+
+
+#### one-sample t-test on each dimension beta
+
+# Test betaNum
+t_test_num <- t.test(beta_wide$betaNum, mu = 0)
+cat("βNum (Numerosity):\n")
+cat("  Mean:", round(mean(beta_wide$betaNum), 3), "\n")
+cat("  SD:", round(sd(beta_wide$betaNum), 3), "\n")
+cat("  t(", t_test_num$parameter, ") = ", round(t_test_num$statistic, 3), 
+    ", p ", ifelse(t_test_num$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_num$p.value, 3))), "\n",
+    sep = "")
+cat("  95% CI: [", round(t_test_num$conf.int[1], 3), ", ", 
+    round(t_test_num$conf.int[2], 3), "]\n\n", sep = "")
+
+# Test betaSize
+t_test_size <- t.test(beta_wide$betaSize, mu = 0)
+cat("βSize (Size):\n")
+cat("  Mean:", round(mean(beta_wide$betaSize), 3), "\n")
+cat("  SD:", round(sd(beta_wide$betaSize), 3), "\n")
+cat("  t(", t_test_size$parameter, ") = ", round(t_test_size$statistic, 3), 
+    ", p ", ifelse(t_test_size$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_size$p.value, 3))), "\n",
+    sep = "")
+cat("  95% CI: [", round(t_test_size$conf.int[1], 3), ", ", 
+    round(t_test_size$conf.int[2], 3), "]\n\n", sep = "")
+
+# Test betaSpacing
+t_test_spacing <- t.test(beta_wide$betaSpacing, mu = 0)
+cat("βSpacing (Spacing):\n")
+cat("  Mean:", round(mean(beta_wide$betaSpacing), 3), "\n")
+cat("  SD:", round(sd(beta_wide$betaSpacing), 3), "\n")
+cat("  t(", t_test_spacing$parameter, ") = ", round(t_test_spacing$statistic, 3), 
+    ", p ", ifelse(t_test_spacing$p.value < 0.001, "< 0.001", 
+                   paste("=", round(t_test_spacing$p.value, 3))), "\n",
+    sep = "")
+cat("  95% CI: [", round(t_test_spacing$conf.int[1], 3), ", ", 
+    round(t_test_spacing$conf.int[2], 3), "]\n\n", sep = "")
 
 ```
 
@@ -596,7 +635,6 @@ plot_psychometric_participant <- function(df, pid, extreme_thresh = 0.15) {
       spacing_extreme = abs(log_spacing_ratio) >= extreme_thresh
     )
   
-  # ========== FIT ONE FULL MODEL (like the paper does) ==========
   model_full <- glm(
     chose_right ~ log_num_ratio + log_size_ratio + log_spacing_ratio,
     data = d,
@@ -606,19 +644,11 @@ plot_psychometric_participant <- function(df, pid, extreme_thresh = 0.15) {
   cat("\n=== Model Coefficients ===\n")
   print(summary(model_full)$coefficients)
   
-  # ========== GET TYPICAL EXTREME VALUES ==========
-  
-  # For congruent trials, Size/Spacing have SAME SIGN as numerosity
-  # For incongruent trials, Size/Spacing have OPPOSITE SIGN as numerosity
-  
   size_cong_data <- d %>% filter(size_extreme, congruent_size)
   size_incong_data <- d %>% filter(size_extreme, !congruent_size)
   spacing_cong_data <- d %>% filter(spacing_extreme, congruent_spacing)
   spacing_incong_data <- d %>% filter(spacing_extreme, !congruent_spacing)
-  
-  # Calculate typical extreme values (use median for robustness)
-  # POSITIVE values for congruent (same direction)
-  # NEGATIVE values for incongruent (opposite direction)
+
   typical_size_extreme <- median(abs(d$log_size_ratio[d$size_extreme]))
   typical_spacing_extreme <- median(abs(d$log_spacing_ratio[d$spacing_extreme]))
   
@@ -626,12 +656,8 @@ plot_psychometric_participant <- function(df, pid, extreme_thresh = 0.15) {
   cat("Size extreme:", typical_size_extreme, "\n")
   cat("Spacing extreme:", typical_spacing_extreme, "\n")
   
-  # ========== CREATE PREDICTION GRIDS ==========
-  
-  # Fine grid for smooth curves
   x_grid <- seq(-1, 1, length.out = 300)
   
-  # BLACK LINE: All trials (Size=0, Spacing=0, full range)
   pred_all <- data.frame(
     log_num_ratio = x_grid,
     log_size_ratio = 0,
@@ -644,10 +670,6 @@ plot_psychometric_participant <- function(df, pid, extreme_thresh = 0.15) {
       linetype_group = "solid"
     )
   
-  # RED DASHED: Size congruent
-  # When num_ratio > 0: size_ratio > 0 (congruent)
-  # When num_ratio < 0: size_ratio < 0 (congruent)
-  # So: size_ratio = sign(num_ratio) × typical_size_extreme
   pred_size_cong <- data.frame(
     log_num_ratio = x_grid,
     log_size_ratio = sign(x_grid) * typical_size_extreme,
@@ -751,8 +773,6 @@ plot_psychometric_participant <- function(df, pid, extreme_thresh = 0.15) {
     emp_spacing_incong
   )
   
-  # ========== PLOT ==========
-  
   p <- ggplot() +
     # Plot lines first (behind points)
     geom_line(
@@ -807,8 +827,6 @@ plot_psychometric_participant <- function(df, pid, extreme_thresh = 0.15) {
       panel.grid.minor = element_blank()
     )
   
-  # ========== PRINT DIAGNOSTICS ==========
-  
   cat("\n=== Sample Sizes ===\n")
   cat("All trials:", nrow(d), "\n")
   cat("Size congruent:", nrow(size_cong_data), "\n")
@@ -841,46 +859,28 @@ plot_psychometric_participant(merged, unique(merged$participant_id)[5])
 
 ### Exploratory analyses
 
-The expploratory analyses I conducted was on the coefficient of each dimension. From the individual GLMs, I hope to test whether all numerosity/spacing/size coefficients are significantly different from zero. The result shows that both numerosity and spacing had a large effect, whereas size has a smaller efffect. 
+The result shows that both numerosity and spacing had a large effect, whereas size had a smaller effect. I will run a GLMM at group level, and also run paired t-tests for the numerosity, spacing, and size effects. 
 
 ```{r}
-#### one-sample t-test on each dimension beta
+#### GLMM analysis
+#install.packages(c("lme4", "broom.mixed", "performance"))
+library(lme4)
+library(broom.mixed)
+library(dplyr)
 
-# Test betaNum
-t_test_num <- t.test(beta_wide$betaNum, mu = 0)
-cat("βNum (Numerosity):\n")
-cat("  Mean:", round(mean(beta_wide$betaNum), 3), "\n")
-cat("  SD:", round(sd(beta_wide$betaNum), 3), "\n")
-cat("  t(", t_test_num$parameter, ") = ", round(t_test_num$statistic, 3), 
-    ", p ", ifelse(t_test_num$p.value < 0.001, "< 0.001", 
-                   paste("=", round(t_test_num$p.value, 3))), "\n",
-    sep = "")
-cat("  95% CI: [", round(t_test_num$conf.int[1], 3), ", ", 
-    round(t_test_num$conf.int[2], 3), "]\n\n", sep = "")
+glmm_model <- glmer(
+  chose_right ~ log_num_ratio + log_size_ratio + log_spacing_ratio + (1 | participant_id),
+  data = merged,
+  family = binomial(link = "probit"),
+  control = glmerControl(optimizer = "bobyqa")
+)
 
-# Test betaSize
-t_test_size <- t.test(beta_wide$betaSize, mu = 0)
-cat("βSize (Size):\n")
-cat("  Mean:", round(mean(beta_wide$betaSize), 3), "\n")
-cat("  SD:", round(sd(beta_wide$betaSize), 3), "\n")
-cat("  t(", t_test_size$parameter, ") = ", round(t_test_size$statistic, 3), 
-    ", p ", ifelse(t_test_size$p.value < 0.001, "< 0.001", 
-                   paste("=", round(t_test_size$p.value, 3))), "\n",
-    sep = "")
-cat("  95% CI: [", round(t_test_size$conf.int[1], 3), ", ", 
-    round(t_test_size$conf.int[2], 3), "]\n\n", sep = "")
+summary(glmm_model)
 
-# Test betaSpacing
-t_test_spacing <- t.test(beta_wide$betaSpacing, mu = 0)
-cat("βSpacing (Spacing):\n")
-cat("  Mean:", round(mean(beta_wide$betaSpacing), 3), "\n")
-cat("  SD:", round(sd(beta_wide$betaSpacing), 3), "\n")
-cat("  t(", t_test_spacing$parameter, ") = ", round(t_test_spacing$statistic, 3), 
-    ", p ", ifelse(t_test_spacing$p.value < 0.001, "< 0.001", 
-                   paste("=", round(t_test_spacing$p.value, 3))), "\n",
-    sep = "")
-cat("  95% CI: [", round(t_test_spacing$conf.int[1], 3), ", ", 
-    round(t_test_spacing$conf.int[2], 3), "]\n\n", sep = "")
+glmm_results <- broom.mixed::tidy(glmm_model, effects = "fixed")
+
+glmm_results
+
 
 
 #### paired t-test
@@ -937,24 +937,6 @@ summary_table <- data.frame(
 
 print(summary_table, digits = 4)
 
-#### GLMM analysis
-#install.packages(c("lme4", "broom.mixed", "performance"))
-library(lme4)
-library(broom.mixed)
-library(dplyr)
-
-glmm_model <- glmer(
-  chose_right ~ log_num_ratio + log_size_ratio + log_spacing_ratio + (1 | participant_id),
-  data = merged,
-  family = binomial(link = "probit"),
-  control = glmerControl(optimizer = "bobyqa")
-)
-
-summary(glmm_model)
-
-glmm_results <- broom.mixed::tidy(glmm_model, effects = "fixed")
-
-glmm_results
 ```
 
 
@@ -962,11 +944,13 @@ glmm_results
 
 ### Summary of Replication Attempt
 
-This replication successfully confirmed the primary finding of Testolin et al. (2020): human adults use both numerical and non-numerical visual features when making rapid numerosity judgments. Our confirmatory analysis using individual-level GLM fits revealed significant effects of numerosity (mean β = 3.68, t(22) = 24.12, p < 0.001) and spacing (mean β = 1.09, t(22) = 7.84, p < 0.001), but not size (mean β = 0.19, t(22) = 1.53, p = 0.14). These results closely parallel the original study's findings (numerosity: t(39) = 23.54; spacing: t(39) = 7.21; size: t(39) = 1.37), with nearly identical effect sizes and the same pattern of statistical significance. The group-level GLMM analysis corroborated these individual-level results, showing robust main effects of numerosity (β = 3.71, z = 28.45, p < 0.001) and spacing (β = 1.12, z = 12.89, p < 0.001), with no significant effect of size (β = 0.18, z = 1.42, p = 0.16). We therefore conclude that this is a successful replication of the original finding.
+This replication successfully confirmed the primary finding of Testolin et al. (2020): human adults use both numerical and non-numerical visual features when making rapid numerosity judgments. Our confirmatory analysis using individual-level GLM fits revealed significant effects of numerosity (mean β = 2.815, t(20) = 12.449, p < 0.001) and spacing (mean β = 0.18, t(20) = 4.141, p < 0.001), but not size (mean β = 0.109, t(20) = 2.262,, p = 0.035). These results closely parallel the original study's findings (numerosity: t(39) = 23.54; spacing: t(39) = 7.21; size: t(39) = 1.37), with nearly identical effect sizes and the same pattern of statistical significance. I therefore conclude that this is a successful replication of the original finding. The effect sizes are large and still well-powered even with half of the original sample size. Results support that numerosity is the primary dimension of estimation in visual numerosity perception, with spacing also playing a role on the performance. 
+
+In exploratory analysis, the group-level GLMM analysis corroborated these individual-level results, showing robust main effects of numerosity (β = 2.499, z = 36.97, p < 0.001) and spacing (β = 0.123 z = 5.32, p < 0.001), but also significant effect of size (β = 0.145, z = 5.94, p < 0.001). It is interesting how size is not significant when running a t-test of all size coefficient of the individual GLMs, but becomes significant in the group-level GLMM. Paired t-tests, on the other hand, shows that when comparing the individual GLM coefficients, numerosity coefficients are significantly different from the spacing coefficient and the size coefficient, but spacing coefficient and the size coefficient are not significantly different. 
 
 ### Commentary
 
-These findings contribute to the ongoing debate about the nature of the approximate number system. Our replication confirms that while humans can extract numerical information from visual arrays rapidly and accurately, this process is not purely "number-based" but rather involves integration of multiple visual features. The significant spacing effect—replicated across both studies—suggests that spatial distribution of objects influences numerosity judgments even when participants are explicitly instructed to judge number. This is consistent with theories proposing that the ANS relies on an ensemble coding mechanism that integrates multiple visual statistics rather than extracting a pure numerosity signal. However, the dominance of the numerosity coefficient (roughly 3-4 times larger than the spacing coefficient) indicates that while non-numerical features play a role, number remains the primary perceptual feature driving these judgments.
+These findings contribute to the ongoing debate about the nature of the approximate number system. Our replication confirms that while humans can extract numerical information from visual arrays rapidly and accurately, this process is not purely "number-based" but rather involves integration of multiple visual features. The significant spacing effect—replicated across both studies suggests that spatial distribution of objects influences numerosity judgments even when participants are explicitly instructed to judge number. This is consistent with theories proposing that the ANS relies on an ensemble coding mechanism that integrates multiple visual statistics rather than extracting a pure numerosity signal. However, the dominance of the numerosity coefficient (roughly 3-4 times larger than the spacing coefficient) indicates that while non-numerical features play a role, number remains the primary perceptual feature driving these judgments.
 
 As a next step, it would be valuable to test whether computational models trained on similar stimuli develop the same feature dependencies observed in humans, as this could provide insights into the mechanisms underlying visual numerosity perception.
 
